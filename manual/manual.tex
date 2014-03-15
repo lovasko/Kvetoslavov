@@ -1,0 +1,70 @@
+\documentclass{article}
+\begin{document}
+	\title{x86 ELF Debugger User Manual}
+	\author{Daniel Lovasko}
+	\date{}
+	\maketitle
+	
+	\section*{Introduction}
+   
+   Operation of debugger is divided into \emph{three} phases listed below. Each phase has its own purpose and offers different functionality. Supported features among other include inserting breakpoints, listing functions or attaching to live running process. Each section includes listing of commands available in the phase. Some commands are available in more than one, but are listed only in one of them, while the duality is emphasized.
+   
+   This debugger supports \emph{only} x86 platform, due to platform-specific breakpoint installation. 32 and 64 bit operating systems are supported. Format of the binary \emph{must} be ELF, with DWARF2 debugging symbols.
+   
+   Supported operating systems are Linux and BSD, while the actual debugger was tested on "FreeBSD RELEASE 9.1 i386" and "Ubuntu 11.10 x86-64". 
+   
+	\pagebreak   
+   
+	\section{Default}
+	Default debugger phase after startup.
+	\subsection{select PATH}
+	Selecting binary file. Provided file is checked to be an ELF binary file. This command moves debugger to next, Preparing phase.	
+	
+	\subsection{attach PID}
+	Attaching to live running process in the system. PID is chcecked to be valid. Beware, that on most systems only non-SUID processes can be debugged (ptraced), even if you have root privilages. Without root privilages, you are not allowed to attach to any process, excluding same UID-class processes. This command moves debugger to Running phase.
+	
+	\subsection{help}
+	Displays help message including list af all available commands. This command works in any phase.	
+	
+	\subsection{exit}
+	Stops debuggee if any and quits the debugger. This command can be used in any phase.
+
+	\pagebreak
+	\section{Preparing}
+	Being in this phase means, that there is still no running debuggee, but we are able to prepare for its execution. All commands in this section are also usable in Running phase.	
+	
+	\subsection{add break PATH NUMBER}
+	Adds breakpoint to process on a address corresponding to specified file (first PATH argument) and its line number (specified by second argument). Both PATH and NUMBER arguments are checked for existance.
+	
+	\subsection{remove break PATH NUMBER}
+	Removes adequate breakpoint. Note that this is done at the end of next breakpoint stop, due to situation, when user tries to remove breakpoint we are currently standing on.
+	
+	\subsection{list breaks}
+	Lists all current breakpoints. This list includes also those breakpoints, that are ought to be removed.	
+	
+	\subsection{list files}
+	Lists all source .c files that took part in compilation process. These files are called compilation units.	
+	
+	\subsection{list functions}
+	Lists all used functions, sectioned by each compilation unit. Return and argument types are not included.
+
+	\pagebreak   
+	\section{Running}
+	Being in this phase meand that debugger has some running process adopted. 
+	
+	\subsection{continue}
+	After stopping by either a SIGINT or breakpoint trap, user can examine the running process with various commands. When done, this command allows the process to continue.
+		
+	\subsection{detach}
+	Removes all inserted breakpoints from the process and re-parents it to its previous parent. From this point, debugger has no power over the process (with exception in consequentive attach command). This command moves debugger to Default phase.
+	
+	\subsection{stop}
+	Stops execution of debuggee. This command moves debugger to Default phase.	
+	
+	\subsection{dump ADDRESS}
+	Prints data in the memory of the debuggee. Note that ADDRESS should be hexadecimal number.	
+	
+	\subsection{pid}
+	Prints debuggee's PID.	
+	
+\end{document}
