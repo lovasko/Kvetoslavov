@@ -9,27 +9,12 @@
 
 #define COMMAND_MAX_ARG 3
 
-enum state
+enum state_t
 {
 	DEFAULT = 1,
 	PREPARING = 2,
 	RUNNING = 4
 };
-
-struct cmd
-{
-	const char *cmd_name;
-	int (*fnc)(char**);
-	int compatible_state;
-	int expected_arg_count;
-};
-
-int state;
-char exec_path[512];
-pid_t pid;
-struct breakpoint *head;
-struct breakpoint *head_add;
-struct breakpoint *head_remove;
 
 /**
  * Set SIGINT handler to ignore for this process.
@@ -51,6 +36,7 @@ void ignore_sigint()
 
 /**
  * Inform user about the debugging phase we are in.
+ * TODO add colors
  */
 void print_state()
 {
@@ -434,10 +420,15 @@ int main(int argc, char **argv)
 	int i;
 	struct cmd *command;
 	int my_argc;
-	
 	/* + 1 is here because command name is treated as argument also */
 	char *my_argv[COMMAND_MAX_ARG + 1];
 	int return_value;
+	enum state_t state;
+	char exec_path[512];
+	pid_t pid;
+	struct breakpoint *head;
+	struct breakpoint *head_add;
+	struct breakpoint *head_remove;
 	
 	ignore_sigint();
 	
@@ -450,22 +441,22 @@ int main(int argc, char **argv)
 
 	struct cmd commands[] =
 	{
-		{"?",              dbg_help,           DEFAULT | PREPARING | RUNNING , 1},
-		{"help",           dbg_help,           DEFAULT | PREPARING | RUNNING , 1},
-		{"exit",           dbg_exit,           DEFAULT | PREPARING | RUNNING , 1},
-		{"run",            dbg_run,            PREPARING,                      1},
-		{"continue",       dbg_continue,       RUNNING,                        1},
-		{"select",         dbg_select,         DEFAULT,                        2},
-		{"list_files",     dbg_list_files,     PREPARING | RUNNING,            1},
-		{"list_breaks",    dbg_list_breaks,    PREPARING | RUNNING,            1},
-		{"list_functions", dbg_list_functions, PREPARING | RUNNING,            1},
-		{"pid",            dbg_pid,            RUNNING,                        1},
-		{"dump",           dbg_dump,           RUNNING,                        2},
-		{"add_break",      dbg_add_break,      PREPARING | RUNNING,            3},
-		{"remove_break",   dbg_remove_break,   PREPARING | RUNNING,            3},
-		{"attach",         dbg_attach,         DEFAULT,                        2},
-		{"detach",         dbg_detach,         RUNNING,                        1},
-		{"stop",           dbg_stop,           RUNNING,                        1},
+		{"?",              command_help,         DEFAULT | PREPARING | RUNNING, 1},
+		{"help",           command_help,         DEFAULT | PREPARING | RUNNING, 1},
+		{"exit",           command_exit,         DEFAULT | PREPARING | RUNNING, 1},
+		{"run",            command_run,            PREPARING,                   1},
+		{"continue",       command_continue,       RUNNING,                     1},
+		{"select",         command_select,         DEFAULT,                     2},
+		{"list_files",     command_list_files,     PREPARING | RUNNING,         1},
+		{"list_breaks",    command_list_breaks,    PREPARING | RUNNING,         1},
+		{"list_functions", command_list_functions, PREPARING | RUNNING,         1},
+		{"pid",            command_pid,            RUNNING,                     1},
+		{"dump",           command_dump,           RUNNING,                     2},
+		{"add_break",      command_add_break,      PREPARING | RUNNING,         3},
+		{"remove_break",   command_remove_break,   PREPARING | RUNNING,         3},
+		{"attach",         command_attach,         DEFAULT,                     2},
+		{"detach",         command_detach,         RUNNING,                     1},
+		{"stop",           command_stop,           RUNNING,                     1},
 		NULL
 	};
 	

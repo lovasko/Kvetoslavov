@@ -1,6 +1,14 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
+struct command_t 
+{
+	const char *command_name;
+	int (*function)(char**);
+	int compatible_state;
+	unsigned short expected_arg_count;
+};
+
 /**
  * Print help message.
  * @param argv unused
