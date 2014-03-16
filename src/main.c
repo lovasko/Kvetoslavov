@@ -9,9 +9,12 @@
 
 #define COMMAND_MAX_ARG 3
 
-#define DEFAULT   1
-#define PREPARING 2
-#define RUNNING   4
+enum state
+{
+	DEFAULT = 1,
+	PREPARING = 2,
+	RUNNING = 4
+};
 
 struct cmd
 {
@@ -28,7 +31,8 @@ struct breakpoint *head;
 struct breakpoint *head_add;
 struct breakpoint *head_remove;
 
-/**Set SIGINT handler to ignore for this process.
+/**
+ * Set SIGINT handler to ignore for this process.
  */
 void ignore_sigint()
 {
@@ -45,7 +49,8 @@ void ignore_sigint()
 	}
 }
 
-/**Inform user about the debugging phase we are in
+/**
+ * Inform user about the debugging phase we are in.
  */
 void print_state()
 {
@@ -66,8 +71,10 @@ void print_state()
 	fflush(stdout);
 }
 
-/**Print help message.
- * @arg unused
+/**
+ * Print help message.
+ * @param argv unused
+ * @return 0
  */
 int dbg_help(char **argv)
 {
@@ -92,10 +99,14 @@ int dbg_help(char **argv)
 				"\tdump <ADDRESS>\n"
 				"\tpid \n"
 		  );
+
 	return 0;
 }
-/**Try to terminate the debugee and break from main loop.
- * @arg unused
+
+/**
+ * Try to terminate the debugee and break from main loop.
+ * @param argv unused
+ * @return -1
  */
 int dbg_exit(char **argv)
 {
@@ -116,15 +127,18 @@ int dbg_exit(char **argv)
 		}
 		else
 		{
-			printf("Unable to terminate the child. Do it yourself, the PID is %d.\n", pid);
+			printf("Unable to terminate the child. Do it yourself, the PID is %d.\n",
+			        pid);
 		}
 	}
 	
 	return -1;
 }
 
-/**Try to stop the debuggee.
- * @arg unused
+/**
+ * Try to stop the debuggee.
+ * @param argv unused
+ * @return 0
  */
 int dbg_stop(char **argv)
 {
@@ -155,8 +169,10 @@ int dbg_stop(char **argv)
 	return 0;
 }
 
-/**Start the debuggee.
- * @arg unused
+/**
+ * Start the debuggee.
+ * @param argv unused
+ * @return 0
  */
 int dbg_run(char **argv)
 {
@@ -174,8 +190,10 @@ int dbg_run(char **argv)
 	return 0;
 }
 
-/**Resume paused debuggee.
- * @arg unused
+/**
+ * Resume paused debuggee.
+ * @param argv unused
+ * @return 0
  */
 int dbg_continue(char **argv)
 {
@@ -204,8 +222,10 @@ int dbg_continue(char **argv)
 	return 0;
 }
 
-/**Basic checks on the executable.
- * @arg second element is used as a path to the executable
+/**
+ * Basic checks on the executable.
+ * @param argv second element is used as a path to the executable
+ * @return 0
  */
 int dbg_select(char **argv)
 {
@@ -230,8 +250,11 @@ int dbg_select(char **argv)
 
 	return 0;
 }
-/**List compilation units.
- * @arg unused
+
+/**
+ * List compilation units.
+ * @param argv unused
+ * @return 0
  */
 int dbg_list_files(char **argv)
 {
@@ -239,8 +262,10 @@ int dbg_list_files(char **argv)
 	return 0;
 }
 
-/**List already inserted breakpoints.
- * @arg unused
+/**
+ * List already inserted breakpoints.
+ * @param argv unused
+ * @return 0
  */
 int dbg_list_breaks(char **argv)
 {
@@ -248,8 +273,9 @@ int dbg_list_breaks(char **argv)
 	return 0;
 }
 
-/**List subprograms used in the executable.
- * @arg unused
+/**
+ * List subprograms used in the executable.
+ * @param argv unused
  */
 int dbg_list_functions(char **argv)
 {
@@ -257,8 +283,10 @@ int dbg_list_functions(char **argv)
 	return 0;
 }
 
-/**Print the PID of debuggee.
- * @arg unused
+/**
+ * Print the PID of debuggee.
+ * @param argv unused
+ * @return 0
  */
 int dbg_pid(char **argv)
 {
@@ -266,8 +294,10 @@ int dbg_pid(char **argv)
 	return 0;
 }
 
-/**Print data inside the process at specified address.
- * @arg second element is used as the address (should be in hexadecimal format)
+/**
+ * Print data inside the process at specified address.
+ * @param argv  second element is used as the address (hexadecimal)
+ * @return 0
  */
 int dbg_dump(char **argv)
 {
@@ -279,9 +309,11 @@ int dbg_dump(char **argv)
 	return 0;
 }
 
-/**Add breakpoint to the debuggee.
- * @arg second element is used as a path to the compilation unit
-        third element is used as a line number
+/**
+ * Add breakpoint to the debuggee.
+ * @param argv second element is used as a path to the compilation unit
+               third element is used as a line number
+ * @return 0
  */
 int dbg_add_break(char **argv)
 {
@@ -316,8 +348,9 @@ int dbg_add_break(char **argv)
 }
 
 /**Remove breakpoint from the debuggee.
- * @arg second element is used as a path to the compilation unit
-        third element is used as a line number
+ * @param argv second element is used as a path to the compilation unit
+               third element is used as a line number
+ * @return 0
  */
 int dbg_remove_break(char **argv)
 {
@@ -332,7 +365,8 @@ int dbg_remove_break(char **argv)
 }
 
 /**Attach to an already running process.
- * @arg second element used as a PID
+ * @param argv second element used as a PID
+ * @return 0
  */
 int dbg_attach(char **argv)
 {
@@ -362,8 +396,10 @@ int dbg_attach(char **argv)
 	return 0;
 }
 
-/**Detach from the debuggee.
- * @arg unused
+/**
+ * Detach from the debuggee.
+ * @param argv unused
+ * @return 0
  */
 int dbg_detach(char **argv)
 {
@@ -386,9 +422,10 @@ int dbg_detach(char **argv)
 	return 0;
 }
 
-/**Command interpreter.
- * @arg not used
- * @arg not used
+/**
+ * Program entry point.
+ * @param argc not used
+ * @param argv not used
  * @return 0 on success, 1 otherwise
  */
 int main(int argc, char **argv)
@@ -413,22 +450,22 @@ int main(int argc, char **argv)
 
 	struct cmd commands[] =
 	{
-		{ "?",              dbg_help,           DEFAULT | PREPARING | RUNNING , 1 },
-		{ "help",           dbg_help,           DEFAULT | PREPARING | RUNNING , 1 },
-		{ "exit",           dbg_exit,           DEFAULT | PREPARING | RUNNING , 1 },
-		{ "run",            dbg_run,            PREPARING,                      1 },
-		{ "continue",       dbg_continue,       RUNNING,                        1 },
-		{ "select",         dbg_select,         DEFAULT,                        2 },
-		{ "list_files",     dbg_list_files,     PREPARING | RUNNING,            1 },
-		{ "list_breaks",    dbg_list_breaks,    PREPARING | RUNNING,            1 },
-		{ "list_functions", dbg_list_functions, PREPARING | RUNNING,            1 },
-		{ "pid",            dbg_pid,            RUNNING,                        1 },
-		{ "dump",           dbg_dump,           RUNNING,                        2 },
-		{ "add_break",      dbg_add_break,      PREPARING | RUNNING,            3 },
-		{ "remove_break",   dbg_remove_break,   PREPARING | RUNNING,            3 },
-		{ "attach",         dbg_attach,         DEFAULT,                        2 },
-		{ "detach",         dbg_detach,         RUNNING,                        1 },
-		{ "stop",           dbg_stop,           RUNNING,                        1 },
+		{"?",              dbg_help,           DEFAULT | PREPARING | RUNNING , 1},
+		{"help",           dbg_help,           DEFAULT | PREPARING | RUNNING , 1},
+		{"exit",           dbg_exit,           DEFAULT | PREPARING | RUNNING , 1},
+		{"run",            dbg_run,            PREPARING,                      1},
+		{"continue",       dbg_continue,       RUNNING,                        1},
+		{"select",         dbg_select,         DEFAULT,                        2},
+		{"list_files",     dbg_list_files,     PREPARING | RUNNING,            1},
+		{"list_breaks",    dbg_list_breaks,    PREPARING | RUNNING,            1},
+		{"list_functions", dbg_list_functions, PREPARING | RUNNING,            1},
+		{"pid",            dbg_pid,            RUNNING,                        1},
+		{"dump",           dbg_dump,           RUNNING,                        2},
+		{"add_break",      dbg_add_break,      PREPARING | RUNNING,            3},
+		{"remove_break",   dbg_remove_break,   PREPARING | RUNNING,            3},
+		{"attach",         dbg_attach,         DEFAULT,                        2},
+		{"detach",         dbg_detach,         RUNNING,                        1},
+		{"stop",           dbg_stop,           RUNNING,                        1},
 		NULL
 	};
 	
@@ -508,7 +545,7 @@ int main(int argc, char **argv)
 		free(line);
 	}
 	while (return_value != -1);
-		
+
 	printf("Bye.\n");
 	return 0;
 }
