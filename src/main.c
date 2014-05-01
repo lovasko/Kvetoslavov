@@ -379,7 +379,7 @@ int dbg_detach(char **argv)
 }
 
 /**
- * Program entry point.
+ * FreeBSD x86 ELF Debugger.
  * @param argc not used
  * @param argv not used
  * @return 0 on success, 1 otherwise
