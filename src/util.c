@@ -1,12 +1,8 @@
 #include "util.h"
-
 #include "platform.h"
                                      
-/**Accept bytes from standard input, until end of line or max_length is reached.
- * @arg maximum length of line in bytes, including terminating NULL
- * @return NULL terminated array of char
- */
-char *read_line(int max_length)
+char*
+read_line (int max_length)
 {
 	char *line;
 	int i;
@@ -28,13 +24,8 @@ char *read_line(int max_length)
 	return line;
 }
 
-
-
-/**Pretty print address and it's content to stdout.
- * @arg process ID
- * @arg address
- */
-void print_address(pid_t pid, unsigned long address)
+void 
+print_address (pid_t pid, unsigned long address)
 {
 	unsigned long value;
 	int i; 
@@ -53,12 +44,8 @@ void print_address(pid_t pid, unsigned long address)
 	printf("\n");
 }
 
-
-
-/**Pretty print number in hexadecimal format.
- * @arg number
- */
-void print_hex(unsigned long number)
+void 
+print_hex (unsigned long number)
 {
 	int i;
 	
@@ -74,32 +61,22 @@ void print_hex(unsigned long number)
 	printf("\n");
 }
 
-
-/**Check whether file exists.
- * @arg path to file
- * @return 0 if file exists, 1 otherwise otherwise
- */
-int file_exists(char *path)
+int 
+file_exists (char *path)
 {
 	int fd;
 	 
 	fd = open(path, O_RDONLY);
+	close(fd);
 	
-	if (fd < 0) return 1;
+	if (fd < 0) 
+		return 1;
 	else 
-	{
-		close(fd);
 		return 0;
-	}
 }
 
-
-
-/**Check whether file is ELF binary.
- * @arg path to file
- * @return 0 if file is ELF binary, 1 otherwise
- */  
-int is_elf(char *path)
+int 
+is_elf (char *path)
 {
 	int fd;
 	char magic[4]; 
@@ -109,49 +86,32 @@ int is_elf(char *path)
 	/* test the beginning of file for ELF magic number */
 	memset(magic, 0, 4);
 	read(fd, &magic, 4);
-    
+
+	close(fd);
+
 	if (strncmp(magic, "\177ELF", 4) == 0)
-	{
-		close(fd);
 		return 0;
-	}
 	else
-	{
-		close(fd);
 		return 1;
-	}
 }
 
-/**Check whether string starts with given prefix.
- * @arg string
- * @arg prefix
- */
-int starts_with(char *string, char *prefix)
+int 
+starts_with (char *string, char *prefix)
 {
 	if (strncmp(string, prefix, strlen(prefix)) == 0)
-	{
 		return 0;
-	}
 	else
-	{
 		return 1;
-	}
 }
 
-/**Check whether directory exists.
- * @arg path to directory
- * @return 0 if exists, 1 otherwise
- */
-int directory_exists(char *path)
+int 
+directory_exists (char *path)
 {
 	struct stat sb;
 
 	if (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode))
-	{
 		return 0;
-	}
 	else
-	{
 		return 1;
-	}
 }
+
