@@ -9,13 +9,6 @@
 
 #define COMMAND_MAX_ARG 3
 
-enum state_t
-{
-	DEFAULT = 1,
-	PREPARING = 2,
-	RUNNING = 4
-};
-
 /**
  * Set SIGINT handler to ignore for this process.
  */
@@ -32,29 +25,6 @@ void ignore_sigint()
 	{
 		sigaction(SIGINT, &new_sa, 0);
 	}
-}
-
-/**
- * Inform user about the debugging phase we are in.
- * TODO add colors
- */
-void print_state()
-{
-	switch (state)
-	{
-		case DEFAULT:
-			printf("def");
-			break;
-		case PREPARING:
-			printf("prp");
-			break;
-		case RUNNING:
-			printf("run");
-			break;
-	}
-
-	printf("> ");
-	fflush(stdout);
 }
 
 /**
