@@ -384,16 +384,19 @@ int dbg_detach(char **argv)
  * @param argv not used
  * @return 0 on success, 1 otherwise
  */
-int main(int argc, char **argv)
+int 
+main (int argc, char **argv)
 {
-	char *line, *dup_line;
+	enum state_t state;
+	char *line;
+
+	char *dup_line;
 	int i;
 	struct cmd *command;
 	int my_argc;
 	/* + 1 is here because command name is treated as argument also */
 	char *my_argv[COMMAND_MAX_ARG + 1];
 	int return_value;
-	enum state_t state;
 	char exec_path[512];
 	pid_t pid;
 	struct breakpoint *head;
@@ -442,12 +445,14 @@ int main(int argc, char **argv)
 	return_value = 0;
 	do
 	{
-		print_state();
+		state_print(state);
 		
 		/* block until return pressed */
 		line = read_line(1024);
 
 		/* try to find suitable command */
+		/* TODO put this to standalone function */
+		/* TODO consider using trie in case of too many commands */
 		command = NULL;
 		for (i = 0; commands[i].cmd_name != NULL; i++)
 		{
@@ -462,7 +467,7 @@ int main(int argc, char **argv)
 		if (command != NULL)
 		{
 			/* check state compatibility */
-			if (state & command->compatible_state)
+			if (state_is_compatible(state, command->compatible_state))
 			{
 				dup_line = strdup(line);
 
@@ -510,3 +515,4 @@ int main(int argc, char **argv)
 	printf("Bye.\n");
 	return 0;
 }
+
