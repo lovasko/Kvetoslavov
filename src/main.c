@@ -3,8 +3,8 @@
 #include "control.h"
 #include "units.h"
 #include "subprogram.h"
-
-/* must be included after all includes */
+#include "commands/command.h"
+#include "commands/state.h"
 #include "platform.h"
 
 #define COMMAND_MAX_ARG 3
