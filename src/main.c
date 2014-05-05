@@ -60,7 +60,7 @@ int dbg_help(char **argv)
 }
 
 /**
- * Try to terminate the debugee and break from main loop.
+ * Try to terminate the debuggee and break from main loop.
  * @param argv unused
  * @return -1
  */
