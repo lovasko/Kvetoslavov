@@ -59,11 +59,12 @@ line_read_stdin (unsigned int max_length)
 	line = (char*)malloc(sizeof(char) * max_length);
 	memset(line, 0, max_length);
 	
-	/* upper limit is max_lenght - 1 to ensure NULL ending */
+	/* upper limit is max_length - 1 to ensure NULL ending */
 	for (i = 0; i < max_length - 1; i++) 
 	{ 
 		read(0, &c, 1);
-		if(c == '\n') break;
+		if(c == '\n') 
+			break;
 		
 		line[i] = c;
 	}
