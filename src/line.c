@@ -70,3 +70,13 @@ line_read_stdin (unsigned int max_length)
 	
 	return line;
 }
+
+int 
+line_starts_with (char *line, const char *prefix)
+{
+	if (strncmp(line, prefix, strlen(prefix)) == 0)
+		return 0;
+	else
+		return 1;
+}
+

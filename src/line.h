@@ -29,5 +29,14 @@ line_read_stdin (unsigned int max_length);
 char**
 line_get_arguments (char **line, char delimiter);
 
+/**
+ * Check whether the line starts with the given prefix.
+ * @param line the line 
+ * @param prefix the prefix
+ * @return 0 if line starts with prefix, 1 otherwise 
+ */  
+int 
+line_starts_with (char *line, const char *prefix);
+
 #endif
 
