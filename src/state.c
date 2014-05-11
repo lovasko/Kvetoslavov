@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 void 
-state_print (enum state_t state)
+state_print (int state)
 {
 	switch (state)
 	{
@@ -29,8 +29,8 @@ state_print (enum state_t state)
 }
 
 int 
-state_is_compatible (enum state_t base, int checked)
+state_is_compatible (int check, struct command_t* command)
 {
-	return (base & checked);
+	return (check & command->compatible_state);
 }
 
