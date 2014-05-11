@@ -10,14 +10,6 @@
 #include <sys/stat.h>
 
 /**
- * Accept bytes from standard input, until end of line or max_length is reached.
- * @arg maximum length of line in bytes, including terminating NULL
- * @return NULL terminated array of char
- */
-char*
-read_line (int max_length);
-
-/**
  * Pretty print address and it's content to stdout.
  * @arg process ID
  * @arg address
@@ -47,15 +39,6 @@ file_exists (char *path);
  */  
 int 
 is_elf (char *path);
-
-/**
- * Check whether string starts with the given prefix.
- * @arg string
- * @arg prefix
- * @return 0 if string starts with prefix, 1 otherwise 
- */  
-int 
-starts_with(char *string, char *prefix);
 
 /**
  * Check whether a directory exists.

@@ -1,28 +1,5 @@
 #include "util.h"
 #include "platform.h"
-                                     
-char*
-read_line (int max_length)
-{
-	char *line;
-	int i;
-	char c;
-	
-	/* this malloc should be freed by the caller */
-	line = (char*)malloc(sizeof(char) * max_length);
-	memset(line, 0, max_length);
-	
-	/* upper limit is max_lenght - 1 to ensure NULL ending */
-	for (i = 0; i < max_length - 1; i++) 
-	{ 
-		read(0, &c, 1);
-		if(c == '\n') break;
-		
-		line[i] = c;
-	}
-	
-	return line;
-}
 
 void 
 print_address (pid_t pid, unsigned long address)
@@ -90,15 +67,6 @@ is_elf (char *path)
 	close(fd);
 
 	if (strncmp(magic, "\177ELF", 4) == 0)
-		return 0;
-	else
-		return 1;
-}
-
-int 
-starts_with (char *string, char *prefix)
-{
-	if (strncmp(string, prefix, strlen(prefix)) == 0)
 		return 0;
 	else
 		return 1;
