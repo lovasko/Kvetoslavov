@@ -24,7 +24,7 @@ runtime_command_select (struct command_args_t *args)
 		if (is_elf(full_path) == 0)
 		{
 			*(args->state) = PREPARING;
-			args->exec_path = full_path;
+			*(args->exec_path) = full_path;
 		}
 		else
 		{
