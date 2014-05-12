@@ -1,5 +1,5 @@
-#ifndef RUNTIME_HELP_H
-#define RUNTIME_HELP_H
+#ifndef KVETOSLAVOV_RUNTIME_HELP
+#define KVETISLAVOV_RUNTIME_HELP
 
 #include "command.h"
 

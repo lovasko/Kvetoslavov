@@ -1,5 +1,5 @@
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef KVETOSLAVOV_UTIL
+#define KVETOSLAVOV_UTIL
 
 /**
  * Set SIGINT handler to ignore for this process.

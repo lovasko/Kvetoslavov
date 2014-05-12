@@ -1,5 +1,5 @@
-#ifndef STATE_H
-#define STATE_H
+#ifndef KVETOSLAVOV_STATE
+#define KVETOSLAVOV_STATE
 
 #include "command.h"
 

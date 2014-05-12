@@ -1,5 +1,5 @@
-#ifndef LINE_H
-#define LINE_H
+#ifndef KVETOSLAVOV_LINE 
+#define KVETOSLAVOV_LINE
 
 /**
  * Counts the number of delimiters in the line. 

@@ -1,5 +1,5 @@
-#ifndef COMMAND_H
-#define COMMAND_H
+#ifndef KVETOSLAVOV_COMMAND 
+#define KVETOSLAVOV_COMMAND
 
 #include <stdio.h>
 #include <stdlib.h>
