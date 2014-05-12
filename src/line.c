@@ -8,7 +8,6 @@ unsigned int
 line_argument_count (char *line, char delimiter)
 {
 	unsigned int i, count;
-	size_t line_size;
 
 	count = 0;
 	for	(i = 0; line[i]; i++)
