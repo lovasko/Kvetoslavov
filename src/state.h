@@ -24,5 +24,13 @@ state_print (int state);
 int 
 state_is_compatible (int check, struct command_t* command);
 
+/**
+ * Converts the state to a string representation.
+ * @param state the state
+ * @return string representation of the state.
+ */
+const char*
+state_to_string(int state);
+
 #endif
 

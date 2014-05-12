@@ -34,3 +34,18 @@ state_is_compatible (int check, struct command_t* command)
 	return (check & command->compatible_state);
 }
 
+const char*
+state_to_string(int state)
+{
+	if (state == DEFAULT)
+		return "default";
+
+	if (state == PREPARING)
+		return "preparing";
+
+	if (state == RUNNING)
+		return "running";
+
+	return "unknown";
+}
+
