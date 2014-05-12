@@ -2,5 +2,12 @@
 .*.s??
 
 # executable files
-a.out
+Kvetoslavov
+kvet
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
 
