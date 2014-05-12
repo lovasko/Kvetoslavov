@@ -16,11 +16,10 @@ main (int argc, char **argv)
 {
 	int state;
 	char *line, *line_free;
-	pid_t pid;
 	int return_value;
 	struct command_t *command;
 	struct command_args_t args;
-	char *exec_path;
+	char *exec_path = NULL;
 
 	ignore_sigint();
 	fprintf(stdout, "Kvetoslavov Debugger\n");
@@ -45,7 +44,7 @@ main (int argc, char **argv)
 
 					args.state = &state;
 					args.text_args = arguments;
-					args.exec_path = exec_path;
+					args.exec_path = &exec_path;
 					return_value = command->function(&args);
 				}
 				else
