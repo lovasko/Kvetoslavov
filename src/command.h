@@ -9,7 +9,7 @@ struct command_args_t
 {
 	int *state;
 	char **text_args;
-	char *exec_path;
+	char **exec_path;
 };
 
 struct command_t
