@@ -19,6 +19,8 @@ main (int argc, char **argv)
 	pid_t pid;
 	int return_value;
 	struct command_t *command;
+	struct command_args_t args;
+	char *exec_path;
 
 	ignore_sigint();
 	fprintf(stdout, "Kvetoslavov Debugger\n");
@@ -40,7 +42,11 @@ main (int argc, char **argv)
 				if (arg_count == command->expected_arg_count)
 				{
 					char **arguments = line_get_arguments(&line, ' ');
-					return_value = command->function(NULL);
+
+					args.state = &state;
+					args.text_args = arguments;
+					args.exec_path = exec_path;
+					return_value = command->function(&args);
 				}
 				else
 				{

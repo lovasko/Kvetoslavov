@@ -7,8 +7,9 @@
 
 struct command_args_t
 {
-	pid_t *pid;
 	int *state;
+	char **text_args;
+	char *exec_path;
 };
 
 struct command_t
