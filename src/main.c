@@ -40,7 +40,7 @@ main (int argc, char **argv)
 				if (arg_count == command->expected_arg_count)
 				{
 					char **arguments = line_get_arguments(&line, ' ');
-					/* return_value = run the function */
+					return_value = command->function(NULL);
 				}
 				else
 				{
