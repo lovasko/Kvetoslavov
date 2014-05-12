@@ -1,9 +1,15 @@
-CC=gcc
-CFLAGS=-c -w
+CC=clang
+CFLAGS=-c -Wall -Isrc/
 LDFLAGS=-ldwarf -lelf 
-SOURCES=main.c control.c units.c util.c subprogram.c breakpoint.c
+SOURCES= \
+	src/main.c \
+	src/line.c \
+	src/util.c \
+	src/state.c \
+	src/command.c \
+	src/runtime/general/help.c
 OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=debugger
+EXECUTABLE=kvet
 
 all: $(SOURCES) $(EXECUTABLE)
 

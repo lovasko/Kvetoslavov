@@ -1,28 +1,9 @@
 #include "command.h"
 #include "state.h"
 #include "line.h"
+#include "util.h"
 #include "runtime/commands.h"
 
-#include <signal.h>
-
-/* TODO move this to the util.c/h */
-/**
- * Set SIGINT handler to ignore for this process.
- */
-void ignore_sigint()
-{
-	struct sigaction new_sa;
-	struct sigaction old_sa;
-
-	sigfillset(&new_sa.sa_mask);
-	new_sa.sa_handler = SIG_IGN;
-	new_sa.sa_flags = 0;
-
-	if (sigaction(SIGINT, &new_sa, &old_sa) == 0 && old_sa.sa_handler != SIG_IGN)
-	{
-		sigaction(SIGINT, &new_sa, 0);
-	}
-}
 
 /**
  * FreeBSD x86 ELF Debugger.
