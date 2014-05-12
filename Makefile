@@ -7,7 +7,9 @@ SOURCES= \
 	src/util.c \
 	src/state.c \
 	src/command.c \
-	src/runtime/general/help.c
+	src/runtime/general/help.c \
+	src/runtime/general/exit.c \
+	src/runtime/general/select.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=kvet
 
