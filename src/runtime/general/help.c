@@ -5,6 +5,8 @@
 int 
 runtime_command_help (struct command_args_t *args)
 {
+	(void) args;
+
 	printf("List of possible commands in each phase:\n"
 			"\tDEFAULT\n"
 				"\tattach <PID>\n"
