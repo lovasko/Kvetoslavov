@@ -1,6 +1,8 @@
 #ifndef KVETOSLAVOV_COMMAND 
 #define KVETOSLAVOV_COMMAND
 
+#include "runtime/breakpoint/breakpoint.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -10,6 +12,8 @@ struct command_args_t
 	int *state;
 	char **text_args;
 	char **exec_path;
+	pid_t *pid;
+	struct breakpoint_t *head;
 };
 
 struct command_t
