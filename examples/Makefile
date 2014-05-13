@@ -1,7 +1,7 @@
 CC=clang
 CFLAGS=-g -o
 
-all: ex1 ex2 ex3 ex4
+all: ex1 ex2 ex3 ex4 ex5
 
 clean:
 	rm -rf *.o
@@ -17,3 +17,6 @@ ex3: ex3.c
 
 ex4: ex4.c
 	$(CC) $(CFLAGS) ex4 ex4.c
+
+ex5: ex5.c
+	$(CC) $(CFLAGS) ex5 ex5.c
