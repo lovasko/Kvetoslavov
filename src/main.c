@@ -4,7 +4,6 @@
 #include "util.h"
 #include "runtime/commands.h"
 
-
 /**
  * FreeBSD x86 ELF Debugger.
  * @param argc not used
@@ -20,6 +19,8 @@ main (int argc, char **argv)
 	struct command_t *command;
 	struct command_args_t args;
 	char *exec_path = NULL;
+	pid_t pid = -1;
+	struct breakpoint_t *head = NULL;
 
 	ignore_sigint();
 	fprintf(stdout, "Kvetoslavov Debugger\n");
@@ -45,6 +46,8 @@ main (int argc, char **argv)
 					args.state = &state;
 					args.text_args = arguments;
 					args.exec_path = &exec_path;
+					args.pid = &pid;
+					args.head = head;
 					return_value = command->function(&args);
 				}
 				else
