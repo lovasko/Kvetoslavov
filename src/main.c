@@ -39,7 +39,8 @@ main (int argc, char **argv)
 			if (state_is_compatible(state, command))
 			{
 				unsigned int arg_count = line_argument_count(line, ' ');
-				if (arg_count == command->expected_arg_count)
+				if (command->expected_arg_count == arg_count ||
+				    command->expected_arg_count == -1)
 				{
 					char **arguments = line_get_arguments(&line, ' ');
 
