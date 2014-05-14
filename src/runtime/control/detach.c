@@ -4,7 +4,7 @@
 #include <sys/ptrace.h>
 #include <sys/types.h>
 
-int 
+static int 
 detach (pid_t pid, struct breakpoint_t *bp)
 {
 	struct breakpoint_t *node; 

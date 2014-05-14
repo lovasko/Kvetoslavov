@@ -8,7 +8,7 @@
 #include <sys/wait.h>
 #include <libgen.h>
 
-int 
+static int 
 start (struct breakpoint_t **bp, char *path, pid_t *pid)
 {
 	char *args[2];

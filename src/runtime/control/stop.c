@@ -5,7 +5,7 @@
 #include <sys/ptrace.h>
 #include <sys/types.h>
 
-int 
+static int 
 stop (pid_t pid)
 {
 	if (ptrace(PT_KILL, pid, 0, 0) == 0)

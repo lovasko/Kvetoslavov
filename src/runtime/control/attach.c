@@ -16,7 +16,7 @@
 #include <sys/vnode.h>
 #include <libprocstat.h>
 
-int
+static int
 attach (pid_t pid)
 {
 	int wait_status;
@@ -32,7 +32,7 @@ attach (pid_t pid)
 	}
 }
 
-int
+static int
 parse_pid (char *text, pid_t *pid)
 {
 	long int input;
@@ -57,7 +57,7 @@ parse_pid (char *text, pid_t *pid)
 	return 0;
 }
 
-char*
+static char*
 search_exec_path_for_pid (pid_t pid)
 {
 	kvm_t *kvm;

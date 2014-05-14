@@ -9,7 +9,7 @@
 #include <sys/types.h>
 #include <machine/reg.h>
 
-int 
+static int 
 resume (struct breakpoint_t **bp, pid_t pid, struct breakpoint_t *to_add, struct breakpoint_t *to_remove)
 {
 	int wait_status;
