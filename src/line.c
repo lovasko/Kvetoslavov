@@ -21,7 +21,7 @@ line_argument_count (char *line, char delimiter)
 		}
 	}
 
-	return count + 1;
+	return count;
 }
 
 char**
