@@ -8,6 +8,13 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <sys/user.h>
+#include <sys/param.h>
+#include <sys/sysctl.h>
+#include <kvm.h>
+#include <sys/vnode.h>
+#include <libprocstat.h>
 
 int
 attach (pid_t pid)
@@ -50,6 +57,38 @@ parse_pid (char *text, pid_t *pid)
 	return 0;
 }
 
+char*
+search_exec_path_for_pid (pid_t pid)
+{
+	kvm_t *kvm;
+	struct kinfo_proc *procs;
+	int count;
+	char *freepath = NULL;
+	char *fullpath = NULL;
+	struct procstat *ps;
+	char *result;
+
+	kvm = kvm_open(0, 0, 0, O_RDONLY, NULL);
+	procs = kvm_getprocs(kvm, KERN_PROC_PID, pid, &count);
+
+	if (count > 0)
+	{
+		ps = procstat_open_sysctl();
+		result = (char*)malloc(255 * sizeof(char));
+		memset(result, '\0', 255);
+		procstat_getpathname(ps, &procs[0], result, 254);
+
+		kvm_close(kvm);
+		procstat_close(ps);
+		return result;	
+	}
+	else
+	{
+		kvm_close(kvm);
+		return NULL;	
+	};
+}
+
 int 
 runtime_command_attach (struct command_args_t *args)
 {
@@ -78,7 +117,7 @@ runtime_command_attach (struct command_args_t *args)
 
 			*(args->state) = RUNNING;
 			*(args->pid) = pid;
-			/* todo get executable path */
+			*(args->exec_path) = search_exec_path_for_pid(pid);
 		}
 		else
 		{
