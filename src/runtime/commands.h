@@ -9,6 +9,9 @@
 #include "runtime/general/status.h"
 #include "runtime/control/run.h"
 #include "runtime/control/attach.h"
+#include "runtime/control/detach.h"
+#include "runtime/control/stop.h"
+#include "runtime/control/continue.h"
 
 struct command_t registred_commands[] =
 {
@@ -21,6 +24,9 @@ struct command_t registred_commands[] =
 	{"info", runtime_command_status, ALL_STATES, 1},
 	{"run", runtime_command_run, PREPARING, 1},
 	{"attach", runtime_command_attach, DEFAULT, 2},
+	{"detach", runtime_command_detach, RUNNING, 1},
+	{"stop", runtime_command_stop, RUNNING, 1},
+	{"continue", runtime_command_continue, RUNNING, 1},
 	NULL
 };
 
