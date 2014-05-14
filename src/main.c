@@ -32,6 +32,11 @@ main (int argc, char **argv)
 	{
 		state_print(state);
 		line_free = line = line_read_stdin(1024);
+		if (line[0] == '\0')
+		{
+			free(line);
+			continue;
+		}
 
 		command = command_match(registred_commands, line);
 		if (command != NULL)
