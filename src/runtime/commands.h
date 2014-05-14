@@ -16,7 +16,7 @@
 struct command_t registred_commands[] =
 {
 	{"?",        runtime_command_help,     ALL_STATES, 0},
-	{"help",     runtime_command_help,     ALL_STATES, 0},
+	{"help",     runtime_command_help,     ALL_STATES, -1},
 	{"exit",     runtime_command_exit,     ALL_STATES, 0},
 	{"quit",     runtime_command_exit,     ALL_STATES, 0},
 	{"select",   runtime_command_select,   DEFAULT, 1},
