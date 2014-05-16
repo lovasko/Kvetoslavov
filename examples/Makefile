@@ -20,3 +20,4 @@ ex4: ex4.c
 
 ex5: ex5.c
 	$(CC) $(CFLAGS) ex5 ex5.c
+
