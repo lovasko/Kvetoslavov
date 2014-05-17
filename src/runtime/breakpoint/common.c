@@ -114,6 +114,8 @@ remove_all_breakpoints (struct breakpoint_t **head)
 {
 	while(*head)
 		remove_breakpoint(head, *head);
+
+	return 0;
 }
 
 int
