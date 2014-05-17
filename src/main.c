@@ -53,7 +53,7 @@ main (int argc, char **argv)
 					args.text_args = arguments;
 					args.exec_path = &exec_path;
 					args.pid = &pid;
-					args.head = head;
+					args.head = &head;
 					return_value = command->function(&args);
 				}
 				else
