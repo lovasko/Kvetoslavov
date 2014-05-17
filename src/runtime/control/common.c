@@ -11,9 +11,6 @@
 int 
 after_wait (int wait_status, pid_t *pid, struct breakpoint_t **bp)
 {
-	char answer[2];
-	pid_t child_pid;
-	int ws;
 	struct reg regs;
 	struct breakpoint_t *node;
 
@@ -30,7 +27,7 @@ after_wait (int wait_status, pid_t *pid, struct breakpoint_t **bp)
 			printf("Program received %s.\n", sys_siglist[WSTOPSIG(wait_status)]);
 		}
 			
-		ptrace(PT_GETREGS, *pid, &regs, 0);
+		ptrace(PT_GETREGS, *pid, (caddr_t)&regs, 0);
 
 		node = *bp;
 		while (node != NULL)
@@ -49,7 +46,6 @@ after_wait (int wait_status, pid_t *pid, struct breakpoint_t **bp)
 		if (node == NULL && *bp != NULL)
 		{
 			printf("Stopped at unknown place. ");
-			//print_address(*pid, INSTRUCTION_PTR(regs));
 		}
 
 		printf("(IP = 0x%X)\n", regs.r_eip);
