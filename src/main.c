@@ -22,6 +22,9 @@ main (int argc, char **argv)
 	pid_t pid = -1;
 	struct breakpoint_t *head = NULL;
 
+	(void) argc;
+	(void) argv;
+
 	ignore_sigint();
 	fprintf(stdout, "Kvetoslavov Debugger\n");
 
@@ -43,7 +46,7 @@ main (int argc, char **argv)
 		{
 			if (state_is_compatible(state, command))
 			{
-				unsigned int arg_count = line_argument_count(line, ' ');
+				int arg_count = line_argument_count(line, ' ');
 				if (command->expected_arg_count == arg_count ||
 				    command->expected_arg_count == -1)
 				{
