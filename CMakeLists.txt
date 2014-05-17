@@ -6,7 +6,7 @@ file(GLOB_RECURSE Kvetoslavov_HEADERS "src/*.h")
 
 include_directories("src/")
 
-list(APPEND CMAKE_C_FLAGS " -Wall -Wextra ${CMAKE_C_FLAGS} ")
+list(APPEND CMAKE_C_FLAGS " -Wall -Wextra -Wno-missing-braces -Wno-missing-field-initializers ${CMAKE_C_FLAGS} ")
 
 add_executable (kvet ${Kvetoslavov_SOURCES})
 target_link_libraries(kvet kvm)
