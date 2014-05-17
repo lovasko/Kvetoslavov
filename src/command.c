@@ -9,12 +9,10 @@ command_print_compatible_states (struct command_t *command)
 		fprintf(stderr, "\tdef\n");
 
 	if (state_is_compatible(PREPARING, command))   
-		fprintf(stderr, "\tprep\n");
+		fprintf(stderr, "\tprp\n");
 
 	if (state_is_compatible(RUNNING, command))   
 		fprintf(stderr, "\trun\n");
-
-	fprintf(stderr, "\n");
 }
 
 struct command_t*
