@@ -31,6 +31,9 @@ state_print (int state)
 int 
 state_is_compatible (int check, struct command_t* command)
 {
+	if (command->compatible_state == 0)
+		return 1;
+
 	return (check & command->compatible_state);
 }
 
