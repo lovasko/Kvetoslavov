@@ -51,7 +51,7 @@ char*
 line_read_stdin (unsigned int max_length)
 {
 	char *line;
-	int i;
+	unsigned int i;
 	char c;
 	
 	/* this malloc should be freed by the caller */
