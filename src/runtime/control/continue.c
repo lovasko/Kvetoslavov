@@ -29,7 +29,7 @@ resume (struct breakpoint_t **bp, pid_t pid, struct breakpoint_t *to_add,
 	}
 	
 	/* handle breakpoints */
-	ptrace(PT_GETREGS, pid, &regs, 0);
+	ptrace(PT_GETREGS, pid, (caddr_t)&regs, 0);
 
 	/* fix the breakpoint address with original instruction byte */
 	node = *bp;
@@ -40,7 +40,7 @@ resume (struct breakpoint_t **bp, pid_t pid, struct breakpoint_t *to_add,
 	{
 		if (node->addr == regs.r_eip - 1)
 		{
-			ptrace(PT_WRITE_I, pid, node->addr, node->orig);
+			ptrace(PT_WRITE_I, pid, (caddr_t)node->addr, node->orig);
 			is_breakpoint = 1;
 			break;
 		}
@@ -52,7 +52,7 @@ resume (struct breakpoint_t **bp, pid_t pid, struct breakpoint_t *to_add,
 	{	
 		/* move one instruction back */
 		regs.r_eip -= 1;
-		ptrace(PT_SETREGS, pid, &regs, 0);
+		ptrace(PT_SETREGS, pid, (caddr_t)&regs, 0);
 		
 		/* perform the original instruction and react to possible changes*/
 		ptrace(PT_STEP, pid, (caddr_t)1, 0);	
@@ -67,7 +67,7 @@ resume (struct breakpoint_t **bp, pid_t pid, struct breakpoint_t *to_add,
 		}
 		
 		/* put the breakpoint instruction 0xCC back */
-		ptrace(PT_WRITE_I, pid, node->addr, node->oxcc);
+		ptrace(PT_WRITE_I, pid, (caddr_t)node->addr, node->oxcc);
 		
 		/* remove breakpoints ought to be removed */
 		node_remove = to_remove;
@@ -79,7 +79,7 @@ resume (struct breakpoint_t **bp, pid_t pid, struct breakpoint_t *to_add,
 			{
 				if (bp_node->addr == node_remove->addr)
 				{
-					ptrace(PT_WRITE_I, pid, bp_node->addr, bp_node->orig); 
+					ptrace(PT_WRITE_I, pid, (caddr_t)bp_node->addr, bp_node->orig); 
 				}
 				
 				bp_node = bp_node->next;
@@ -93,11 +93,11 @@ resume (struct breakpoint_t **bp, pid_t pid, struct breakpoint_t *to_add,
 	node_add = to_add;
 	while (node_add != NULL)
 	{
-		node_add->orig = ptrace(PT_READ_I, pid, node_add->addr, 0);
+		node_add->orig = ptrace(PT_READ_I, pid, (caddr_t)node_add->addr, 0);
 		node_add->oxcc = (node_add->orig & (unsigned long)0xFFFFFFFFFFFFFF00) | 
 		    0xCC;
 		
-		ptrace(PT_WRITE_I, pid, node_add->addr, node_add->oxcc);
+		ptrace(PT_WRITE_I, pid, (caddr_t)node_add->addr, node_add->oxcc);
 		
 		node_add = node_add->next;
 	}
@@ -123,7 +123,6 @@ runtime_command_continue (struct command_args_t *args)
 		*(args->state) = RUNNING;
 
 	/* remove breakpoints to be removed */
-	/*
 	node_remove = head_remove;
 	while (node_remove != NULL)
 	{
@@ -133,7 +132,6 @@ runtime_command_continue (struct command_args_t *args)
 
 	remove_all_breakpoints(&head_add);
 	remove_all_breakpoints(&head_remove);
-	*/
 	return 0;
 }
 
