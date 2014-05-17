@@ -114,8 +114,8 @@ runtime_command_continue (struct command_args_t *args)
 {
 	struct breakpoint_t *node_remove;
 
-	/* TODO breakpoint */
-	if (resume(NULL, *(args->pid), NULL, NULL) == 0)
+	if (resume(args->head, *(args->pid), *(args->head_add), *(args->head_remove)) 
+	    == 0)
 	{
 		*(args->state) = DEFAULT;
 	}
@@ -123,15 +123,15 @@ runtime_command_continue (struct command_args_t *args)
 		*(args->state) = RUNNING;
 
 	/* remove breakpoints to be removed */
-	node_remove = head_remove;
+	node_remove = *(args->head_remove);
 	while (node_remove != NULL)
 	{
-		remove_breakpoint(&head, node_remove->path, node_remove->line);
+		remove_breakpoint(args->head, node_remove);
 		node_remove = node_remove->next;
 	}
 
-	remove_all_breakpoints(&head_add);
-	remove_all_breakpoints(&head_remove);
+	remove_all_breakpoints(args->head_add);
+	remove_all_breakpoints(args->head_remove);
 	return 0;
 }
 
