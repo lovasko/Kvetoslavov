@@ -2,11 +2,12 @@
 #include "runtime/breakpoint/breakpoint.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <string.h>
 #include <dwarf.h>
 #include <libdwarf.h>
-#include <sys/syslimits.h>
+#include <sys/param.h>
 
 int
 compilation_unit_exists (char *exec_path, char *unit_path)
@@ -15,7 +16,7 @@ compilation_unit_exists (char *exec_path, char *unit_path)
 	Dwarf_Debug dbg;
 	Dwarf_Error err;
 	Dwarf_Unsigned cu_header_length;
-	Dwarf_Unsigned abbrev_offset;
+	Dwarf_Off abbrev_offset;
 	Dwarf_Unsigned next_cu_header;
 	Dwarf_Half version_stamp;
 	Dwarf_Half address_size;
