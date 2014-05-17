@@ -10,7 +10,8 @@
 #include <machine/reg.h>
 
 static int 
-resume (struct breakpoint_t **bp, pid_t pid, struct breakpoint_t *to_add, struct breakpoint_t *to_remove)
+resume (struct breakpoint_t **bp, pid_t pid, struct breakpoint_t *to_add, 
+    struct breakpoint_t *to_remove)
 {
 	int wait_status;
 	struct reg regs;
@@ -60,7 +61,8 @@ resume (struct breakpoint_t **bp, pid_t pid, struct breakpoint_t *to_add, struct
 		/* check whether the single step caused anything */
 		if (WIFEXITED(wait_status))
 		{
-			printf("Child exited on breakpoint in file %s at line %d.\n", node->path, node->line);
+			printf("Child exited on breakpoint in file %s at line %d.\n", node->path, 
+			    node->line);
 			return 0;
 		}
 		
@@ -92,7 +94,8 @@ resume (struct breakpoint_t **bp, pid_t pid, struct breakpoint_t *to_add, struct
 	while (node_add != NULL)
 	{
 		node_add->orig = ptrace(PT_READ_I, pid, node_add->addr, 0);
-		node_add->oxcc = (node_add->orig & (unsigned long)0xFFFFFFFFFFFFFF00) | 0xCC;
+		node_add->oxcc = (node_add->orig & (unsigned long)0xFFFFFFFFFFFFFF00) | 
+		    0xCC;
 		
 		ptrace(PT_WRITE_I, pid, node_add->addr, node_add->oxcc);
 		
