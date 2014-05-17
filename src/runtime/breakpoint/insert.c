@@ -19,7 +19,9 @@ search_for_breakpoint (char *exec_path, char *unit_path, int line,
 	int fd;
 	Dwarf_Debug dbg = 0;
 	Dwarf_Error err;
-	Dwarf_Unsigned cu_header_length, abbrev_offset, next_cu_header;
+	Dwarf_Unsigned cu_header_length;
+	Dwarf_Off abbrev_offset;
+	Dwarf_Unsigned next_cu_header;
 	Dwarf_Half version_stamp, address_size;
 	Dwarf_Die no_die = 0, child_die;
 	char *comp_dir_string;
@@ -64,7 +66,7 @@ search_for_breakpoint (char *exec_path, char *unit_path, int line,
 				dwarf_lineaddr(li, &pc, &err);
 				dwarf_lineno(li, &lineno, &err);
 
-				if (line == lineno)
+				if ((unsigned int)line == lineno)
 				{
 					found->line = line;
 					found->path = strdup(unit_path);
@@ -121,7 +123,8 @@ runtime_command_breakpoint_insert (struct command_args_t *args)
 	{
 		if (*(args->state) == RUNNING)
 		{
-			new_node.orig = ptrace(PT_READ_I, *(args->pid), new_node.addr, 0);
+			new_node.orig = ptrace(PT_READ_I, *(args->pid), (caddr_t)new_node.addr, 
+			    0);
 			new_node.oxcc = (new_node.orig & 0xFFFFFFFFFFFFFF00UL) | 0xCC;
 		
 			add_breakpoint(*(args->head_add), &new_node);
@@ -129,7 +132,8 @@ runtime_command_breakpoint_insert (struct command_args_t *args)
 		}
 
 		add_breakpoint(*(args->head), &new_node);
-		printf("Added breakpoint in file %s at line %d\n", args->text_args[1], line_number);
+		printf("Added breakpoint in file %s at line %d\n", args->text_args[1], 
+		    line_number);
 	}
 	if (search_retval == 1)
 	{
