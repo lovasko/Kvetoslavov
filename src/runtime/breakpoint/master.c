@@ -36,15 +36,12 @@ runtime_command_breakpoint_master (struct command_args_t *args)
 
 	if (strcmp(args->text_args[1], "list") == 0)
 	{
+		/* omitting the state check, since this command can run in any state */
+
 		if (arg_count == 1)
-		{
 			return runtime_command_breakpoint_list(&new_args);
-		}
 		else
-		{
 			fprintf(stderr, "Wrong argument count.");	
-			return 0;
-		}
 	}
 	else if (strcmp(args->text_args[1], "insert") == 0)
 	{
@@ -52,14 +49,9 @@ runtime_command_breakpoint_master (struct command_args_t *args)
 		    *(args->state) == RUNNING)
 		{
 			if (arg_count == 3)
-			{
 				return runtime_command_breakpoint_insert(&new_args);	
-			}
 			else
-			{
 				fprintf(stderr, "Wrong argument count.");	
-				return 0;	
-			}
 		}
 		else
 		{
@@ -71,19 +63,15 @@ runtime_command_breakpoint_master (struct command_args_t *args)
 	else if (strcmp(args->text_args[1], "remove") == 0)
 	{
 		if (arg_count == 3)
-		{
 			return runtime_command_breakpoint_remove(&new_args);
-		}
 		else
-		{
 			fprintf(stderr, "Wrong argument count.");	
-			return 0;	
-		}
 	}
 	else
 	{
 		fprintf(stderr, "No such breakpoint subcommand.\n");
-		return 0;
 	}
+
+	return 0;
 }
 
