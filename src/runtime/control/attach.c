@@ -3,6 +3,7 @@
 #include "state.h"
 
 #include <stdlib.h>
+#include <string.h>
 #include <sys/ptrace.h>
 #include <sys/wait.h>
 #include <sys/types.h>
@@ -21,7 +22,7 @@ attach (pid_t pid)
 {
 	int wait_status;
 	
-	if (ptrace(PT_ATTACH, pid, NULL, NULL) == 0)
+	if (ptrace(PT_ATTACH, pid, NULL, 0) == 0)
 	{
 		wait(&wait_status);
 		return 0;
@@ -63,8 +64,6 @@ search_exec_path_for_pid (pid_t pid)
 	kvm_t *kvm;
 	struct kinfo_proc *procs;
 	int count;
-	char *freepath = NULL;
-	char *fullpath = NULL;
 	struct procstat *ps;
 	char *result;
 
