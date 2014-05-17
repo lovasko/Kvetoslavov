@@ -33,25 +33,25 @@ start (struct breakpoint_t **bp, char *path, pid_t *pid)
 		wait(&wait_status);
 
 		/* insert breakpoints and save the original byte */
-		/*
 		node = *bp;
 		while (node != NULL)
 		{ 
-			node->orig = ptrace(PT_READ_I, *pid, node->addr, 0);
+			node->orig = ptrace(PT_READ_I, *pid, (caddr_t)node->addr, 0);
 
 			/* replace first byte for 0xCC */
-			/*node->oxcc = (node->orig & (unsigned long)0xFFFFFFFFFFFFFF00) | 0xCC;
-			ptrace(PT_WRITE_I, *pid, node->addr, node->oxcc);
+			node->oxcc = (node->orig & (unsigned long)0xFFFFFFFFFFFFFF00) | 0xCC;
+			ptrace(PT_WRITE_I, *pid, (caddr_t)node->addr, node->oxcc);
 			
 			node = node->next;
 		}
-		*/
 		
 		/* carry on */
 		ptrace(PT_CONTINUE, *pid, (caddr_t)1, 0);
 		wait(&wait_status);
 		return after_wait(wait_status, pid, bp);
 	}
+
+	return 0;
 }
 
 int 
