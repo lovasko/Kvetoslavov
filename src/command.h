@@ -23,7 +23,7 @@ struct command_t
 	const char *name;
 	int (*function)(struct command_args_t *args);
 	int compatible_state;
-	unsigned short expected_arg_count;
+	int expected_arg_count;
 };
 
 /**
