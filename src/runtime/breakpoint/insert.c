@@ -107,18 +107,15 @@ runtime_command_breakpoint_insert (struct command_args_t *args)
 		fprintf(stderr, "Wrong line number format.\n");
 		return 0;
 	}
-	printf("After number check.\n");
 
 	if (compilation_unit_exists(*(args->exec_path), args->text_args[1]) != 0)
 	{
 		fprintf(stderr, "No such compilation unit.\n");
 		return 0;
 	}
-	printf("After compilation unit check.\n");
 
 	search_retval = search_for_breakpoint(*(args->exec_path), args->text_args[1],
 	    line_number, &new_node);
-	printf("After search.\n");
 
 	if (search_retval == 0)
 	{

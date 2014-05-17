@@ -32,20 +32,16 @@ compilation_unit_exists (char *exec_path, char *unit_path)
 		perror("open");	
 		return 1;
 	}
-	printf("After open %s.\n", exec_path);
 
 	if (dwarf_init(fd, DW_DLC_READ, 0, 0, &dbg, &err) != DW_DLV_OK)
 	{
 		printf("%s\n", dwarf_errmsg(err));
 	}
-	printf("After init.\n");
 
 	dwarf_next_cu_header(dbg, &cu_header_length, &version_stamp, &abbrev_offset, 
 	    &address_size, &next_cu_header, &err);
-	printf("After cuheader.\n");
 
 	dwarf_siblingof(dbg, no_die, &child_die, &err);
-	printf("After siblingof.\n");
 
 	while (1)
 	{
