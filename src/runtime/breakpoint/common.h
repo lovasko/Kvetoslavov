@@ -10,6 +10,9 @@ int
 remove_breakpoint (struct breakpoint_t **head, struct breakpoint_t *to_remove);
 
 int
+remove_all_breakpoints (struct breakpoint_t **head);
+
+int
 add_breakpoint (struct breakpoint_t *head, struct breakpoint_t *to_add);
 
 #endif
