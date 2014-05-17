@@ -15,7 +15,7 @@ runtime_command_breakpoint_list (struct command_args_t *args)
 	while (node != NULL)
 	{
 		printf("Breakpoint in file %s at line %d (0x%X)\n", node->path, node->line, 
-		    (unsigned long)node->addr);
+		    node->addr);
 		node = node->next;
 	}
 
