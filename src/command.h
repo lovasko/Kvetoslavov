@@ -13,7 +13,9 @@ struct command_args_t
 	char **text_args;
 	char **exec_path;
 	pid_t *pid;
-	struct breakpoint_t *head;
+	struct breakpoint_t **head;
+	struct breakpoint_t **head_add;
+	struct breakpoint_t **head_remove;
 };
 
 struct command_t
