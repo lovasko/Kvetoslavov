@@ -13,7 +13,7 @@ detach (pid_t pid, struct breakpoint_t *bp)
 	node = bp;
 	while (node != NULL)
 	{
-		ptrace(PT_WRITE_I, pid, bp->addr, node->orig);
+		ptrace(PT_WRITE_I, pid, (caddr_t)bp->addr, node->orig);
 		node = node->next;
 	}
 	
