@@ -36,7 +36,6 @@ line_get_arguments (char **line, char delimiter)
 	index = 0;
 
 	while ((token = strsep(line, &delimiter)) != NULL)	
-
 	{
 		if (token[0] == '\0')
 			continue;
@@ -62,7 +61,7 @@ line_read_stdin (unsigned int max_length)
 	for (i = 0; i < max_length - 1; i++) 
 	{ 
 		read(0, &c, 1);
-		if(c == '\n') 
+		if (c == '\n') 
 			break;
 		
 		line[i] = c;
