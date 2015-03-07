@@ -1,11 +1,11 @@
-#include "runtime/general/help.h"
-
 #include <stdio.h>
 
+#include "runtime/general/help.h"
+
 int 
-runtime_command_help (struct command_args_t *args)
+runtime_command_help(struct command_args* cmd_args)
 {
-	(void) args;
+	(void) cmd_args;
 
 	printf("List of possible commands in each phase:\n"
 			"\tDEFAULT\n"

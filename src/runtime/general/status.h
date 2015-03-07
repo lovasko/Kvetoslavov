@@ -1,7 +1,7 @@
-#ifndef KVETOSLAVOV_RUNTIME_EXIT
-#define KVETISLAVOV_RUNTIME_EXIT
+#ifndef KVETOSLAVOV_RUNTIME_GENERAL_STATUS_H
+#define KVETISLAVOV_RUNTIME_GENERAL_STATUS_H
 
-#include "command.h"
+#include "command/command.h"
 
 /**
  * Print all set variables and lists to the stdout.
@@ -9,7 +9,7 @@
  * @return 0
  */
 int 
-runtime_command_status (struct command_args_t *args);
+runtime_command_status(struct command_args* cmd_args);
 
 #endif
 

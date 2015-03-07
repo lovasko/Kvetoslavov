@@ -1,7 +1,7 @@
-#ifndef KVETOSLAVOV_RUNTIME_HELP
-#define KVETISLAVOV_RUNTIME_HELP
+#ifndef KVETOSLAVOV_RUNTIME_GENERAL_HELP_H
+#define KVETISLAVOV_RUNTIME_GENERAL_HELP_H
 
-#include "command.h"
+#include "command/command.h"
 
 /**
  * Print help message.
@@ -9,7 +9,7 @@
  * @return 0
  */
 int 
-runtime_command_help (struct command_args_t *args);
+runtime_command_help(struct command_args* cmd_args);
 
 #endif
 

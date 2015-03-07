@@ -1,7 +1,7 @@
-#ifndef KVETOSLAVOV_RUNTIME_SELECT
-#define KVETISLAVOV_RUNTIME_SELECT
+#ifndef KVETOSLAVOV_RUNTIME_GENERAL_SELECT_H
+#define KVETISLAVOV_RUNTIME_GENERAL_SELECT_H
 
-#include "command.h"
+#include "command/command.h"
 
 /**
  * Select and test correctnes of an executable.
@@ -10,7 +10,7 @@
  * @return 0
  */
 int 
-runtime_command_select (struct command_args_t *args);
+runtime_command_select(struct command_args* cmd_args);
 
 #endif
 

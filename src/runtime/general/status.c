@@ -1,14 +1,14 @@
-#include "runtime/general/status.h"
-#include "state.h"
-
 #include <stdio.h>
 
+#include "runtime/general/status.h"
+#include "state/state.h"
+
 int 
-runtime_command_status (struct command_args_t *args)
+runtime_command_status (struct command_args* cmd_args)
 {
-	fprintf(stdout, "            PID: %d\n", *(args->pid));
-	fprintf(stdout, "          State: %s\n", state_to_string(*(args->state)));
-	fprintf(stdout, "Executable path: %s\n", *(args->exec_path));
+	fprintf(stdout, "            PID: %d\n", *(cmd_args->pid));
+	fprintf(stdout, "          State: %s\n", state_to_string(*(cmd_args->state)));
+	fprintf(stdout, "Executable path: %s\n", *(cmd_args->exec_path));
 
 	return 0;
 }
