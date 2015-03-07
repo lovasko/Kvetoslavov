@@ -1,5 +1,5 @@
-#ifndef KVETOSLAVOV_LINE 
-#define KVETOSLAVOV_LINE
+#ifndef KVETOSLAVOV_UTIL_LINE_H
+#define KVETOSLAVOV_UTIL_LINE_H
 
 /**
  * Counts the number of delimiters in the line. 
@@ -9,7 +9,7 @@
  * @return number of delimiters in the text
  */
 unsigned int
-line_argument_count (char *line, char delimiter);
+line_argument_count (char* line, char delimiter);
 
 /**
  * Accept bytes from standard input, until end of line or max_length is reached.
@@ -27,7 +27,7 @@ line_read_stdin (unsigned int max_length);
  * @return array of char pointers 
  */
 char**
-line_get_arguments (char **line, char delimiter);
+line_get_arguments (char** line, char delimiter);
 
 /**
  * Check whether the line starts with the given prefix.
@@ -36,7 +36,7 @@ line_get_arguments (char **line, char delimiter);
  * @return 0 if line starts with prefix, 1 otherwise 
  */  
 int 
-line_starts_with (char *line, const char *prefix);
+line_starts_with (char* line, const char* prefix);
 
 #endif
 

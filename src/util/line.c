@@ -1,8 +1,8 @@
-#include "line.h"
-
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#include "util/line.h"
 
 unsigned int
 line_argument_count (char *line, char delimiter)
@@ -10,13 +10,10 @@ line_argument_count (char *line, char delimiter)
 	unsigned int i, count;
 
 	count = 0;
-	for	(i = 0; line[i]; i++)
-	{
-		if (line[i] == delimiter)	
-		{
+	for	(i = 0; line[i]; i++) {
+		if (line[i] == delimiter)	{
 			if (line[i+1] == line[i] || line[i+1] == '\0')
 				continue;
-
 			count++;
 		}
 	}
@@ -35,8 +32,7 @@ line_get_arguments (char **line, char delimiter)
 	    delimiter));	
 	index = 0;
 
-	while ((token = strsep(line, &delimiter)) != NULL)	
-	{
+	while ((token = strsep(line, &delimiter)) != NULL)	{
 		if (token[0] == '\0')
 			continue;
 		
@@ -58,8 +54,7 @@ line_read_stdin (unsigned int max_length)
 	memset(line, 0, max_length);
 	
 	/* upper limit is max_length - 1 to ensure NULL ending */
-	for (i = 0; i < max_length - 1; i++) 
-	{ 
+	for (i = 0; i < max_length - 1; i++) { 
 		read(0, &c, 1);
 		if (c == '\n') 
 			break;

@@ -1,10 +1,10 @@
-#include "util.h"
-
 #include <signal.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
+
+#include "util/util.h"
 
 void ignore_sigint()
 {
@@ -15,14 +15,13 @@ void ignore_sigint()
 	new_sa.sa_handler = SIG_IGN;
 	new_sa.sa_flags = 0;
 
-	if (sigaction(SIGINT, &new_sa, &old_sa) == 0 && old_sa.sa_handler != SIG_IGN)
-	{
+	if (sigaction(SIGINT, &new_sa, &old_sa) == 0 
+	     && old_sa.sa_handler != SIG_IGN)
 		sigaction(SIGINT, &new_sa, 0);
-	}
 }
 
 int 
-file_exists (char *path)
+file_exists(char* path)
 {
 	int fd;
  
@@ -36,7 +35,7 @@ file_exists (char *path)
 }
 
 int 
-is_elf (char *path)
+is_elf(char* path)
 {
 	int fd;
 	char magic[4]; 

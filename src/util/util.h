@@ -1,5 +1,5 @@
-#ifndef KVETOSLAVOV_UTIL
-#define KVETOSLAVOV_UTIL
+#ifndef KVETOSLAVOV_UTIL_UTIL_H
+#define KVETOSLAVOV_UTIL_UTIL_H
 
 /**
  * Set SIGINT handler to ignore for this process.
@@ -12,7 +12,7 @@ void ignore_sigint();
  * @return 1 if file exists, 0 otherwise
  */
 int 
-file_exists (char *path);
+file_exists(char *path);
 
 /**
  * Check whether file is an ELF binary.
@@ -20,7 +20,7 @@ file_exists (char *path);
  * @return 0 if file is an ELF binary, 1 otherwise
  */  
 int 
-is_elf (char *path);
+is_elf(char *path);
 
 #endif
 
