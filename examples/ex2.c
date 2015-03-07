@@ -1,23 +1,18 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int main(int argc, char **argv)
+int
+main(void)
 {
 	printf("before fork\n");
 	
-	if (fork() == 0)
-	{
-		if (fork() == 0)
-		{
-			printf("boy\n");
-		}
-		else
-		{
+	if (fork() == 0) {
+		if (fork() == 0) {
+			printf("child\n");
+		} else {
 			printf("father\n");
 		}
-	}
-	else
-	{
+	} else {
 		printf("grandfather\n");
 	}
 	
