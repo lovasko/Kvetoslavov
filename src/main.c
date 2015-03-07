@@ -1,8 +1,11 @@
-#include "command.h"
-#include "state.h"
-#include "line.h"
-#include "util.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "command/command.h"
 #include "runtime/commands.h"
+#include "state/state.h"
+#include "util/line.h"
+#include "util/util.h"
 
 /**
  * FreeBSD x86 ELF Debugger.
@@ -11,16 +14,19 @@
  * @return 0 on success, 1 otherwise
  */
 int 
-main (int argc, char **argv)
+main(int argc, char* argv[])
 {
-	int state;
-	char *line, *line_free;
+	char* exec_path;
+	char* line;
+	char* line_free;
+	char** arguments;
+	int arg_count;
 	int return_value;
-	struct command_t *command;
-	struct command_args_t args;
-	char *exec_path = NULL;
-	pid_t pid = -1;
-	struct breakpoint_t *head = NULL;
+	int state;
+	pid_t pid;
+	struct breakpoint* bp_head;
+	struct command* cmd;
+	struct command_args cmd_args;
 
 	(void) argc;
 	(void) argv;
@@ -28,61 +34,52 @@ main (int argc, char **argv)
 	ignore_sigint();
 	fprintf(stdout, "Kvetoslavov Debugger\n");
 
-	state = DEFAULT;
+	bp_head = NULL;
+	exec_path = NULL;
+	pid = -1;
 	return_value = 0;
+	state = DEFAULT;
 
-	do
-	{
+	do {
 		state_print(state);
 		line_free = line = line_read_stdin(1024);
-		if (line[0] == '\0')
-		{
+		if (line[0] == '\0') {
 			free(line);
 			continue;
 		}
 
-		command = command_match(registred_commands, line);
-		if (command != NULL)
-		{
-			if (state_is_compatible(state, command))
-			{
-				int arg_count = line_argument_count(line, ' ');
-				if (command->expected_arg_count == arg_count ||
-				    command->expected_arg_count == -1)
-				{
-					char **arguments = line_get_arguments(&line, ' ');
+		cmd = command_match(registred_commands, line);
+		if (cmd != NULL) {
+			if (state_is_compatible(state, cmd)) {
+				arg_count = line_argument_count(line, ' ');
+				if (cmd->expected_arg_count == arg_count ||
+				    cmd->expected_arg_count == -1) {
+					**arguments = line_get_arguments(&line, ' ');
 
-					args.state = &state;
-					args.text_args = arguments;
-					args.exec_path = &exec_path;
-					args.pid = &pid;
-					args.head = &head;
-					return_value = command->function(&args);
-				}
-				else
-				{
+					cmd_args.state = &state;
+					cmd_args.text_args = arguments;
+					cmd_args.exec_path = &exec_path;
+					cmd_args.pid = &pid;
+					cmd_args.head = &bp_head;
+					return_value = cmd->function(&cmd_args);
+				} else {
 					fprintf(stderr, "Wrong number of arguments. %d supplied, %d "
-					    "expected.\n", arg_count, command->expected_arg_count);
+					    "expected.\n", arg_count, cmd->expected_arg_count);
 				}
-			}
-			else
-			{
+			} else {
 				fprintf(stderr, "%s\n%s\n",
 				    "You are not in a compatible state for this operation. ",
 						"Compatible states are:");
 
-				command_print_compatible_states(command);
+				command_print_compatible_states(cmd);
 			}
-		}
-		else
-		{
+		} else {
 			fprintf(stderr, "Unknown command. In case of confusion, try 'help'.\n");
 		}
 
 		free(line_free);
-	}
-	while (return_value != -1);
+	} while (return_value != -1);
 
-	return 0;
+	return EXIT_SUCCESS;
 }
 
