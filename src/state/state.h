@@ -1,7 +1,7 @@
-#ifndef KVETOSLAVOV_STATE
-#define KVETOSLAVOV_STATE
+#ifndef KVETOSLAVOV_STATE_STATE_H
+#define KVETOSLAVOV_STATE_STATE_H
 
-#include "command.h"
+#include "command/command.h"
 
 #define DEFAULT    1
 #define PREPARING  2
@@ -13,7 +13,7 @@
  * @param state the state to be printed
  */
 void 
-state_print (int state);
+state_print(int state);
 
 /**
  * Check if the state is compatible.
@@ -22,7 +22,7 @@ state_print (int state);
  * @return 1 if command is compatible with check, 0 otherwise
  */
 int 
-state_is_compatible (int check, struct command_t* command);
+state_is_compatible(int state, struct command* cmd);
 
 /**
  * Converts the state to a string representation.

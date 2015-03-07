@@ -1,12 +1,11 @@
-#include "state.h"
+#include "state/state.h"
 
 #include <stdio.h>
 
 void 
-state_print (int state)
+state_print(int state)
 {
-	switch (state)
-	{
+	switch (state) {
 		case DEFAULT:
 			printf("def");
 		break;
@@ -29,12 +28,12 @@ state_print (int state)
 }
 
 int 
-state_is_compatible (int check, struct command_t* command)
+state_is_compatible(int state, struct command* cmd)
 {
-	if (command->compatible_state == 0)
+	if (cmd->compatible_state == 0)
 		return 1;
 
-	return (check & command->compatible_state);
+	return (state & cmd->compatible_state);
 }
 
 const char*
