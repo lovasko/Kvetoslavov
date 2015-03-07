@@ -1,7 +1,7 @@
-#ifndef KVETOSLAVOV_RUNTIME_DETACH
-#define KVETISLAVOV_RUNTIME_DETACH
+#ifndef KVETOSLAVOV_RUNTIME_CONTROL_DETACH_H
+#define KVETISLAVOV_RUNTIME_CONTROL_DETACH_H
 
-#include "command.h"
+#include "command/command.h"
 
 /**
  * Detach the debuggee.
@@ -9,7 +9,7 @@
  * @return 0
  */
 int 
-runtime_command_detach (struct command_args_t *args);
+runtime_command_detach(struct command_args* cmd_args);
 
 #endif
 

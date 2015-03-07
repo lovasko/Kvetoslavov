@@ -1,7 +1,7 @@
-#ifndef KVETOSLAVOV_RUNTIME_RUN
-#define KVETISLAVOV_RUNTIME_RUN
+#ifndef KVETOSLAVOV_RUNTIME_CONTROL_RUN_H
+#define KVETISLAVOV_RUNTIME_CONTROL_RUN_H
 
-#include "command.h"
+#include "command/command.h"
 
 /**
  * Start the selected executable.
@@ -9,7 +9,7 @@
  * @return 0
  */
 int 
-runtime_command_run (struct command_args_t *args);
+runtime_command_run(struct command_args* cmd_args);
 
 #endif
 

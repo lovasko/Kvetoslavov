@@ -1,23 +1,24 @@
-#include "runtime/control/run.h"
-#include "runtime/control/common.h"
-#include "runtime/breakpoint/breakpoint.h"
-#include "state.h"
-
-#include <sys/ptrace.h>
 #include <sys/types.h>
+#include <sys/ptrace.h>
 #include <sys/wait.h>
+
 #include <libgen.h>
 
+#include "runtime/breakpoint/breakpoint.h"
+#include "runtime/control/common.h"
+#include "runtime/control/run.h"
+#include "state/state.h"
+
+
 static int 
-start (struct breakpoint_t **bp, char *path, pid_t *pid)
+start(struct breakpoint** bp, char* path, pid_t* pid)
 {
-	char *args[2];
+	char* args[2];
 	int wait_status;
-	struct breakpoint_t *node;
+	struct breakpoint* node;
 	
 	*pid = fork();
-	if (*pid == 0)
-	{
+	if (*pid == 0) {
 		/* if we are in the child, allow the tracing */
 		ptrace(PT_TRACE_ME, 0, 0, 0);
 				
@@ -26,16 +27,13 @@ start (struct breakpoint_t **bp, char *path, pid_t *pid)
 		
 		 /* rewrite the process with desired executable */
 		execv(path, args);
-	}
-	else
-	{
+	} else {
 		/* stop after first instruction */
 		wait(&wait_status);
 
 		/* insert breakpoints and save the original byte */
 		node = *bp;
-		while (node != NULL)
-		{ 
+		while (node != NULL) { 
 			node->orig = ptrace(PT_READ_I, *pid, (caddr_t)node->addr, 0);
 
 			/* replace first byte for 0xCC */
@@ -55,16 +53,15 @@ start (struct breakpoint_t **bp, char *path, pid_t *pid)
 }
 
 int 
-runtime_command_run (struct command_args_t *args)
+runtime_command_run(struct command_args* cmd_args)
 {
-	if (start(args->head, *(args->exec_path), args->pid) == 0)
-	{
-		*(args->state) = DEFAULT;
-		*(args->pid) = -1;
-		*(args->exec_path) = NULL;
+	if (start(cmd_args->head, *(cmd_args->exec_path), cmd_args->pid) == 0) {
+		*(cmd_args->state) = DEFAULT;
+		*(cmd_args->pid) = -1;
+		*(cmd_args->exec_path) = NULL;
+	} else {
+		*(cmd_args->state) = RUNNING;
 	}
-	else
-		*(args->state) = RUNNING;
 
 	return 0;
 }

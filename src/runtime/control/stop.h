@@ -1,7 +1,7 @@
-#ifndef KVETOSLAVOV_RUNTIME_STOP
-#define KVETISLAVOV_RUNTIME_STOP
+#ifndef KVETOSLAVOV_RUNTIME_CONTROL_STOP_H
+#define KVETISLAVOV_RUNTIME_CONTROL_STOP_H
 
-#include "command.h"
+#include "command/command.h"
 
 /**
  * Kill the debuggee.
@@ -9,7 +9,7 @@
  * @return 0
  */
 int 
-runtime_command_stop (struct command_args_t *args);
+runtime_command_stop(struct command_args* cmd_args);
 
 #endif
 

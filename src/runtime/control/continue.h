@@ -1,7 +1,7 @@
-#ifndef KVETOSLAVOV_RUNTIME_CONTINUE
-#define KVETISLAVOV_RUNTIME_CONTINUE
+#ifndef KVETOSLAVOV_RUNTIME_CONTROL_CONTINUE_H
+#define KVETISLAVOV_RUNTIME_CONTROL_CONTINUE_H
 
-#include "command.h"
+#include "command/command.h"
 
 /**
  * Resume the debugee.
@@ -9,7 +9,7 @@
  * @return 0
  */
 int 
-runtime_command_continue (struct command_args_t *args);
+runtime_command_continue(struct command_args* cmd_args);
 
 #endif
 

@@ -1,7 +1,7 @@
-#ifndef KVETOSLAVOV_RUNTIME_ATTACH
-#define KVETISLAVOV_RUNTIME_ATTACH
+#ifndef KVETOSLAVOV_RUNTIME_CONTROL_ATTACH_H
+#define KVETISLAVOV_RUNTIME_CONTROL_ATTACH_H
 
-#include "command.h"
+#include "command/command.h"
 
 /**
  * Attach to the selected process.
@@ -9,7 +9,7 @@
  * @return 0
  */
 int 
-runtime_command_attach (struct command_args_t *args);
+runtime_command_attach(struct command_args* cmd_args);
 
 #endif
 
