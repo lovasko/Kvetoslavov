@@ -1,0 +1,23 @@
+cflags = -Wall -Wextra -ansi -pedantic
+
+rule compile
+ command = clang $cflags -c $in -o $out
+
+rule link
+ command = clang -o $out $in 
+
+build bin/ex1: link obj/ex1.o
+build obj/ex1.o: compile ex1.c
+
+build bin/ex2: link obj/ex2.o
+build obj/ex2.o: compile ex2.c
+
+build bin/ex3: link obj/ex3.o
+build obj/ex3.o: compile ex3.c
+
+build bin/ex4: link obj/ex4.o
+build obj/ex4.o: compile ex4.c
+
+build bin/ex5: link obj/ex5.o
+build obj/ex5.o: compile ex5.c
+
