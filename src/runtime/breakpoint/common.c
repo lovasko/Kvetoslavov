@@ -1,16 +1,17 @@
-#include "runtime/breakpoint/common.h"
-#include "runtime/breakpoint/breakpoint.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <string.h>
-#include <dwarf.h>
-#include <libdwarf.h>
 #include <sys/param.h>
 
+#include <stdlib.h>
+#include <dwarf.h>
+#include <fcntl.h>
+#include <libdwarf.h>
+#include <stdio.h>
+#include <string.h>
+
+#include "runtime/breakpoint/breakpoint.h"
+#include "runtime/breakpoint/common.h"
+
 int
-compilation_unit_exists (char *exec_path, char *unit_path)
+compilation_unit_exists(char* exec_path, char* unit_path)
 {
 	int fd;
 	Dwarf_Debug dbg;
@@ -20,32 +21,31 @@ compilation_unit_exists (char *exec_path, char *unit_path)
 	Dwarf_Unsigned next_cu_header;
 	Dwarf_Half version_stamp;
 	Dwarf_Half address_size;
-	Dwarf_Die no_die = 0;
+	Dwarf_Die no_die;
 	Dwarf_Die child_die;
 	Dwarf_Attribute comp_dir_attr;
 	Dwarf_Attribute name_attr;
-	char *comp_dir_string;
-	char *name_string;
+	char* comp_dir_string;
+	char* name_string;
 	char die_path[PATH_MAX];
 
-	if ((fd = open(exec_path, O_RDONLY) < 0))
-	{
+	if ((fd = open(exec_path, O_RDONLY) < 0)) {
 		perror("open");	
 		return 1;
 	}
 
-	if (dwarf_init(fd, DW_DLC_READ, 0, 0, &dbg, &err) != DW_DLV_OK)
-	{
+	if (dwarf_init(fd, DW_DLC_READ, 0, 0, &dbg, &err) != DW_DLV_OK) {
 		printf("%s\n", dwarf_errmsg(err));
+		return 1;
 	}
 
 	dwarf_next_cu_header(dbg, &cu_header_length, &version_stamp, &abbrev_offset, 
 	    &address_size, &next_cu_header, &err);
 
+	no_die = 0;
 	dwarf_siblingof(dbg, no_die, &child_die, &err);
 
-	while (1)
-	{
+	while (1) {
 		dwarf_attr(child_die, DW_AT_comp_dir, &comp_dir_attr, &err);
 		dwarf_formstring(comp_dir_attr, &comp_dir_string, &err);
 
@@ -68,15 +68,15 @@ compilation_unit_exists (char *exec_path, char *unit_path)
 }
 
 int
-remove_breakpoint (struct breakpoint_t **head, struct breakpoint_t *to_remove)
+remove_breakpoint(struct breakpoint** head, struct breakpoint* to_remove)
 {
-	struct breakpoint_t *next;
-	struct breakpoint_t **prev, **node;
+	struct breakpoint* next;
+	struct breakpoint** prev;
+	struct breakpoint** node;
 
 	/* check first node */
 	if (to_remove->line == (*head)->line && 
-	    strcmp(to_remove->path, (*head)->path) == 0)
-	{
+	    strcmp(to_remove->path, (*head)->path) == 0) {
 		next = (*head)->next;
 		free(*head);
 		*head = next;
@@ -92,11 +92,9 @@ remove_breakpoint (struct breakpoint_t **head, struct breakpoint_t *to_remove)
 	prev = head;
 	node = &(*head)->next;
 
-	while (*node != NULL)
-	{
+	while (*node != NULL) {
 		if (to_remove->line == (*node)->line && 
-		    strcmp(to_remove->path, (*node)->path) == 0)
-		{
+		    strcmp(to_remove->path, (*node)->path) == 0) {
 			(*prev)->next = (*node)->next;
 			free(*node);
 
@@ -110,7 +108,7 @@ remove_breakpoint (struct breakpoint_t **head, struct breakpoint_t *to_remove)
 }
 
 int
-remove_all_breakpoints (struct breakpoint_t **head)
+remove_all_breakpoints(struct breakpoint** head)
 {
 	while(*head)
 		remove_breakpoint(head, *head);
@@ -119,20 +117,17 @@ remove_all_breakpoints (struct breakpoint_t **head)
 }
 
 int
-add_breakpoint (struct breakpoint_t *head, struct breakpoint_t *to_add)
+add_breakpoint(struct breakpoint* head, struct breakpoint* to_add)
 {
-	struct breakpoint_t *node;
+	struct breakpoint* node;
 
-	if (head == NULL)
-	{
-		head = (struct breakpoint_t*)malloc(sizeof(struct breakpoint_t));
+	if (head == NULL) {
+		head = (struct breakpoint*)malloc(sizeof(struct breakpoint));
 		head->line = to_add->line;
 		head->path = strdup(to_add->path);
 		head->addr = to_add->addr;
 		head->next = NULL;
-	}
-	else
-	{
+	} else {
 		for (node = head->next; node->next; node = node->next);	
 
 		node->next = (struct breakpoint_t*)malloc(sizeof(struct breakpoint_t));

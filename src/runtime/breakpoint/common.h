@@ -1,19 +1,19 @@
-#ifndef KVETOSLAVOV_RUNTIME_BREAKPOINT_COMMON
-#define KVETOSLAVOV_RUNTIME_BREAKPOINT_COMMON
+#ifndef KVETOSLAVOV_RUNTIME_BREAKPOINT_COMMON_H
+#define KVETOSLAVOV_RUNTIME_BREAKPOINT_COMMON_H
 
 #include "runtime/breakpoint/breakpoint.h"
 
 int
-compilation_unit_exists (char *exec_path, char *unit_name);
+compilation_unit_exists(char* exec_path, char* unit_name);
 
 int
-remove_breakpoint (struct breakpoint_t **head, struct breakpoint_t *to_remove);
+remove_breakpoint(struct breakpoint** head, struct breakpoint* to_remove);
 
 int
-remove_all_breakpoints (struct breakpoint_t **head);
+remove_all_breakpoints(struct breakpoint** head);
 
 int
-add_breakpoint (struct breakpoint_t *head, struct breakpoint_t *to_add);
+add_breakpoint(struct breakpoint* head, struct breakpoint* to_add);
 
 #endif
 
