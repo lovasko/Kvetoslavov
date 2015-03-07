@@ -1,16 +1,17 @@
-#include "runtime/util.h"
-
-#include <kvm.h>
-#include <fcntl.h>
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #include <sys/user.h>
 
+#include <fcntl.h>
+#include <kvm.h>
+
+#include "runtime/util.h"
+
 int
-runtime_process_exists (pid_t pid)
+runtime_process_exists(pid_t pid)
 {
-	kvm_t *kvm;
-	struct kinfo_proc *result;
+	kvm_t* kvm;
+	struct kinfo_proc* result;
 	int count;
 
 	kvm = kvm_open(0, 0, 0, O_RDONLY, NULL);

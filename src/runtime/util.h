@@ -1,5 +1,5 @@
-#ifndef KVETOSLAVOV_RUNTIME_UTIL
-#define KVETOSLAVOV_RUNTIME_UTIL
+#ifndef KVETOSLAVOV_RUNTIME_UTIL_H
+#define KVETOSLAVOV_RUNTIME_UTIL_H
 
 #include <unistd.h>
 
@@ -9,7 +9,7 @@
  * @return 0 if exists, 1 otherwise
  */
 int
-runtime_process_exists (pid_t pid);
+runtime_process_exists(pid_t pid);
 
 #endif
 
