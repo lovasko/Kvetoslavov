@@ -5,9 +5,10 @@
 #include "util/line.h"
 
 unsigned int
-line_argument_count (char *line, char delimiter)
+line_argument_count (char* line, char delimiter)
 {
-	unsigned int i, count;
+	unsigned int i;
+	unsigned int count;
 
 	count = 0;
 	for	(i = 0; line[i]; i++) {
@@ -22,10 +23,10 @@ line_argument_count (char *line, char delimiter)
 }
 
 char**
-line_get_arguments (char **line, char delimiter)
+line_get_arguments (char** line, char delimiter)
 {
-	char **result;
-	char *token;
+	char** result;
+	char* token;
 	unsigned int index;
 	
 	result = (char**)malloc(sizeof(char*) * line_argument_count(*line,
@@ -45,7 +46,7 @@ line_get_arguments (char **line, char delimiter)
 char*
 line_read_stdin (unsigned int max_length)
 {
-	char *line;
+	char* line;
 	unsigned int i;
 	char c;
 	
@@ -66,7 +67,7 @@ line_read_stdin (unsigned int max_length)
 }
 
 int 
-line_starts_with (char *line, const char *prefix)
+line_starts_with (char* line, const char* prefix)
 {
 	if (strncmp(line, prefix, strlen(prefix)) == 0)
 		return 0;
