@@ -16,15 +16,15 @@
 
 struct command registred_commands[] =
 {
+	{"?",          runtime_command_help,              ALL_STATES, -1},
 	{"exit",       runtime_command_exit,              ALL_STATES, 0},
+	{"help",       runtime_command_help,              ALL_STATES, -1},
 /*
-	{"?",          runtime_command_help,              ALL_STATES, 0},
 	{"attach",     runtime_command_attach,            DEFAULT,    1},
 	{"bp",         runtime_command_breakpoint_master, 0,         -1},
 	{"breakpoint", runtime_command_breakpoint_master, 0,         -1},
 	{"continue",   runtime_command_continue,          RUNNING,    0},
 	{"detach",     runtime_command_detach,            RUNNING,    0},
-	{"help",       runtime_command_help,              ALL_STATES, -1},
 	{"info",       runtime_command_status,            ALL_STATES, 0},
 	{"quit",       runtime_command_exit,              ALL_STATES, 0},
 	{"run",        runtime_command_run,               PREPARING,  0},
