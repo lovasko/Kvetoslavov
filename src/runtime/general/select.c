@@ -26,7 +26,7 @@ runtime_command_select(struct command_args* cmd_args)
 			fprintf(stderr, "Selected file is not an ELF binary.\n");
 		}
 	} else {
-		fprintf(stderr, "No such file.\n");
+		fprintf(stderr, "No such file: '%s'.\n", full_path);
 	}
 
 	return 0;
