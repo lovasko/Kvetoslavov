@@ -15,7 +15,7 @@
 #include <string.h>
 
 #include "runtime/control/attach.h"
-#include "runtime/util.h"
+#include "runtime/control/common.h"
 #include "state/state.h"
 
 static int

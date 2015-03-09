@@ -2,7 +2,7 @@
 #include <sys/ptrace.h>
 
 #include "runtime/control/stop.h"
-#include "runtime/util.h"
+#include "runtime/control/common.h"
 #include "state/state.h"
 
 static int 
