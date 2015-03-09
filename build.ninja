@@ -7,7 +7,7 @@ rule compile
 rule link
  command = clang -o $out $in $ldflags
 
-build bin/kvet: link obj/main.o obj/state/state.o obj/util/util.o obj/util/line.o obj/command/command.o obj/runtime/general/exit.o obj/runtime/general/help.o obj/runtime/general/select.o obj/runtime/general/status.o
+build bin/kvet: link obj/main.o obj/state/state.o obj/util/util.o obj/util/line.o obj/command/command.o obj/runtime/general/exit.o obj/runtime/general/help.o obj/runtime/general/select.o obj/runtime/general/status.o obj/runtime/control/run.o
 
 build obj/main.o: compile src/main.c
 build obj/command/command.o: compile src/command/command.c
@@ -18,4 +18,5 @@ build obj/runtime/general/exit.o: compile src/runtime/general/exit.c
 build obj/runtime/general/help.o: compile src/runtime/general/help.c
 build obj/runtime/general/status.o: compile src/runtime/general/status.c
 build obj/runtime/general/select.o: compile src/runtime/general/select.c
+build obj/runtime/control/run.o: compile src/runtime/control/run.c
 
