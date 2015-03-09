@@ -55,7 +55,7 @@ start(struct breakpoint** bp, char* path, pid_t* pid)
 int 
 runtime_command_run(struct command_args* cmd_args)
 {
-	if (start(cmd_args->head, *(cmd_args->exec_path), cmd_args->pid) == 0) {
+	if (start(cmd_args->bp_head, *(cmd_args->exec_path), cmd_args->pid) == 0) {
 		*(cmd_args->state) = DEFAULT;
 		*(cmd_args->pid) = -1;
 		*(cmd_args->exec_path) = NULL;
