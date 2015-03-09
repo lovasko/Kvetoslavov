@@ -14,7 +14,7 @@ runtime_command_select(struct command_args* cmd_args)
 	full_path = realpath(cmd_args->text_args[1], NULL);
 
 	if (errno != 0) {
-		perror("select error");
+		perror("select: realpath");
 		return 0;
 	}
 
