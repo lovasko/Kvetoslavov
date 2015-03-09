@@ -1,0 +1,18 @@
+cflags = -ansi -pedantic -Wall -Wextra -Isrc/
+ldflags = -lkvm -lprocstat -ldwarf -lelf
+
+rule compile
+ command = clang $cflags -c $in -o $out
+
+rule link
+ command = clang -o $out $in $ldflags
+
+build bin/kvet: link obj/main.o obj/state/state.o obj/util/util.o obj/util/line.o obj/command/command.o obj/runtime/general/exit.o
+
+build obj/main.o: compile src/main.c
+build obj/command/command.o: compile src/command/command.c
+build obj/state/state.o: compile src/state/state.c
+build obj/util/util.o: compile src/util/util.c
+build obj/util/line.o: compile src/util/line.c
+build obj/runtime/general/exit.o: compile src/runtime/general/exit.c
+
