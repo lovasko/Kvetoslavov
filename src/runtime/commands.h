@@ -27,10 +27,11 @@ struct command registred_commands[] =
 	{"run",        runtime_command_run,               PREPARING,  0},
 	{"select",     runtime_command_select,            DEFAULT,    1},
 	{"status",     runtime_command_status,            RUNNING,    0},
+	{"stop",       runtime_command_stop,              RUNNING,    0},
 /*
 	{"bp",         runtime_command_breakpoint_master, 0,         -1},
 	{"breakpoint", runtime_command_breakpoint_master, 0,         -1},
-	{"stop",       runtime_command_stop,              RUNNING,    0}, */
+*/
 };
 
 #endif
