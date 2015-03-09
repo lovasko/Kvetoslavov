@@ -7,7 +7,7 @@ rule compile
 rule link
  command = clang -o $out $in $ldflags
 
-build bin/kvet: link obj/main.o obj/state/state.o obj/util/util.o obj/util/line.o obj/command/command.o obj/runtime/general/exit.o obj/runtime/general/help.o obj/runtime/general/select.o obj/runtime/general/status.o obj/runtime/control/run.o obj/runtime/control/common.o obj/runtime/control/attach.o obj/runtime/control/detach.o obj/runtime/control/continue.o obj/runtime/control/stop.o
+build bin/kvet: link obj/main.o obj/state/state.o obj/util/util.o obj/util/line.o obj/command/command.o obj/runtime/general/exit.o obj/runtime/general/help.o obj/runtime/general/select.o obj/runtime/general/status.o obj/runtime/control/run.o obj/runtime/control/common.o obj/runtime/control/attach.o obj/runtime/control/detach.o obj/runtime/control/continue.o obj/runtime/control/stop.o obj/runtime/general/pid.o
 
 build obj/main.o: compile src/main.c
 build obj/command/command.o: compile src/command/command.c
@@ -24,4 +24,5 @@ build obj/runtime/control/attach.o: compile src/runtime/control/attach.c
 build obj/runtime/control/detach.o: compile src/runtime/control/detach.c
 build obj/runtime/control/continue.o: compile src/runtime/control/continue.c
 build obj/runtime/control/stop.o: compile src/runtime/control/stop.c
+build obj/runtime/general/pid.o: compile src/runtime/general/pid.c
 

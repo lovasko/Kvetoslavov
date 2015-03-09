@@ -8,6 +8,7 @@
 #include "runtime/control/detach.h"
 #include "runtime/control/run.h"
 #include "runtime/control/stop.h"
+#include "runtime/general/pid.h"
 #include "runtime/general/exit.h"
 #include "runtime/general/help.h"
 #include "runtime/general/select.h"
@@ -24,6 +25,7 @@ struct command registred_commands[] =
 	{"help",       runtime_command_help,              ALL_STATES, -1},
 	{"info",       runtime_command_status,            RUNNING,    0},
 	{"quit",       runtime_command_exit,              ALL_STATES, 0},
+	{"pid",        runtime_command_pid,               ALL_STATES, 0},
 	{"run",        runtime_command_run,               PREPARING,  0},
 	{"select",     runtime_command_select,            DEFAULT,    1},
 	{"status",     runtime_command_status,            RUNNING,    0},
