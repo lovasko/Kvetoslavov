@@ -1,16 +1,12 @@
-# vim swap files
-.*.s??
-
 # executable files
-Kvetoslavov
-kvet
+bin/
 examples/ex?
 
-# CMake files
-CMakeCache.txt
-CMakeFiles/
-Makefile
-cmake_install.cmake
+# object files
+obj/
+
+# Ninja files
+.ninja*
 
 # core files
 *.core
