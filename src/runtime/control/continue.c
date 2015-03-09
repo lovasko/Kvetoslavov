@@ -109,21 +109,21 @@ runtime_command_continue(struct command_args* cmd_args)
 {
 	struct breakpoint* node_remove;
 
-	if (resume(cmd_args->head, *(cmd_args->pid), *(cmd_args->head_add), 
-	           *(cmd_args->head_remove)) == 0)
+	if (resume(cmd_args->bp_head, *(cmd_args->pid), *(cmd_args->bp_head_add), 
+	           *(cmd_args->bp_head_remove)) == 0)
 		*(cmd_args->state) = DEFAULT;
 	else
 		*(cmd_args->state) = RUNNING;
 
 	/* remove breakpoints to be removed */
-	node_remove = *(cmd_args->head_remove);
+	node_remove = *(cmd_args->bp_head_remove);
 	while (node_remove != NULL) {
-		remove_breakpoint(cmd_args->head, node_remove);
+		/* remove_breakpoint(cmd_args->head, node_remove); */
 		node_remove = node_remove->next;
 	}
 
-	remove_all_breakpoints(cmd_args->head_add);
-	remove_all_breakpoints(cmd_args->head_remove);
+	/* remove_all_breakpoints(cmd_args->head_add); */
+	/* remove_all_breakpoints(cmd_args->head_remove); */
 
 	return 0;
 }
