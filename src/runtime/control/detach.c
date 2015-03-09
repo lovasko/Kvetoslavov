@@ -5,7 +5,7 @@
 #include "state/state.h"
 
 static int 
-detach (pid_t pid, struct breakpoint* bp)
+detach(pid_t pid, struct breakpoint* bp)
 {
 	struct breakpoint* node; 
 	
