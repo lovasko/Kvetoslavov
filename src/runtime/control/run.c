@@ -9,7 +9,7 @@
 #include "runtime/control/run.h"
 #include "state/state.h"
 
-
+/* TODO add error handling and reporting */
 static int 
 start(struct breakpoint** bp, char* path, pid_t* pid)
 {
