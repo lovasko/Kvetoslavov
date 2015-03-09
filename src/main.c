@@ -27,6 +27,7 @@ main(int argc, char* argv[])
 	struct breakpoint* bp_head;
 	struct command* cmd;
 	struct command_args cmd_args;
+	unsigned int n_cmds;
 
 	(void) argc;
 	(void) argv;
@@ -39,6 +40,7 @@ main(int argc, char* argv[])
 	pid = -1;
 	return_value = 0;
 	state = DEFAULT;
+	n_cmds = sizeof(registred_commands)/sizeof(registred_commands[0]);
 
 	do {
 		state_print(state);
@@ -48,19 +50,19 @@ main(int argc, char* argv[])
 			continue;
 		}
 
-		cmd = command_match(registred_commands, line);
+		cmd = command_match(registred_commands, n_cmds, line);
 		if (cmd != NULL) {
 			if (state_is_compatible(state, cmd)) {
 				arg_count = line_argument_count(line, ' ');
 				if (cmd->expected_arg_count == arg_count ||
 				    cmd->expected_arg_count == -1) {
-					**arguments = line_get_arguments(&line, ' ');
+					arguments = line_get_arguments(&line, ' ');
 
 					cmd_args.state = &state;
 					cmd_args.text_args = arguments;
 					cmd_args.exec_path = &exec_path;
 					cmd_args.pid = &pid;
-					cmd_args.head = &bp_head;
+					cmd_args.bp_head = &bp_head;
 					return_value = cmd->function(&cmd_args);
 				} else {
 					fprintf(stderr, "Wrong number of arguments. %d supplied, %d "
