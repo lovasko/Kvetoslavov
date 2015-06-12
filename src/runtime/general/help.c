@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "runtime/general/help.h"
+#include "runtime/general/general.h"
 
 int 
 runtime_command_help(struct command_args* cmd_args)
