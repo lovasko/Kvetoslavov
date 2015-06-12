@@ -11,7 +11,7 @@
 #include <signal.h>
 #include <stdio.h>
 
-#include "runtime/control/common.h"
+#include "runtime/control/control.h"
 
 int 
 after_wait(int wait_status, pid_t* pid, struct breakpoint** bp)

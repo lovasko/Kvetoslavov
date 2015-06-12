@@ -14,8 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "runtime/control/attach.h"
-#include "runtime/control/common.h"
+#include "runtime/control/control.h"
 #include "state/state.h"
 
 static int

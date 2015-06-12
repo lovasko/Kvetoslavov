@@ -6,9 +6,7 @@
 #include <machine/reg.h>
 
 #include "runtime/breakpoint/breakpoint.h"
-#include "runtime/breakpoint/common.h"
-#include "runtime/control/common.h"
-#include "runtime/control/continue.h"
+#include "runtime/control/control.h"
 #include "state/state.h"
 
 static int 

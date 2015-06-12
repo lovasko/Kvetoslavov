@@ -1,8 +1,7 @@
 #include <sys/types.h>
 #include <sys/ptrace.h>
 
-#include "runtime/control/stop.h"
-#include "runtime/control/common.h"
+#include "runtime/control/control.h"
 #include "state/state.h"
 
 static int 

@@ -1,7 +1,7 @@
 #include <sys/types.h>
 #include <sys/ptrace.h>
 
-#include "runtime/control/detach.h"
+#include "runtime/control/control.h"
 #include "state/state.h"
 
 static int 

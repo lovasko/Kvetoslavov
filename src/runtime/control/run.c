@@ -5,8 +5,7 @@
 #include <libgen.h>
 
 #include "runtime/breakpoint/breakpoint.h"
-#include "runtime/control/common.h"
-#include "runtime/control/run.h"
+#include "runtime/control/control.h"
 #include "state/state.h"
 
 /* TODO add error handling and reporting */
