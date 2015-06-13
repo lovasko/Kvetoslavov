@@ -5,7 +5,7 @@
 #include "util/line.h"
 
 unsigned int
-line_argument_count (char* line, char delimiter)
+line_argument_count(char* line, char delimiter)
 {
 	unsigned int i;
 	unsigned int count;
@@ -23,7 +23,7 @@ line_argument_count (char* line, char delimiter)
 }
 
 char**
-line_get_arguments (char** line, char delimiter)
+line_get_arguments(char** line, char delimiter)
 {
 	char** result;
 	char* token;
@@ -44,7 +44,7 @@ line_get_arguments (char** line, char delimiter)
 }
 
 char*
-line_read_stdin (unsigned int max_length)
+line_read_stdin(unsigned int max_length)
 {
 	char* line;
 	unsigned int i;
@@ -67,7 +67,7 @@ line_read_stdin (unsigned int max_length)
 }
 
 int 
-line_starts_with (char* line, const char* prefix)
+line_starts_with(char* line, const char* prefix)
 {
 	if (strncmp(line, prefix, strlen(prefix)) == 0)
 		return 0;
