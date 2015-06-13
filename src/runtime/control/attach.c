@@ -15,7 +15,7 @@
 #include <string.h>
 
 #include "runtime/control/control.h"
-#include "state/state.h"
+#include "runtime/state.h"
 
 static int
 attach(pid_t pid)
@@ -82,12 +82,12 @@ search_exec_path_for_pid(pid_t pid)
 }
 
 int 
-runtime_command_attach (struct command_args *cmd_args)
+runtime_command_attach (struct context* ctx)
 {
 	pid_t pid;
 	int pid_parse_error;
 
-	if ((pid_parse_error = parse_pid(cmd_args->text_args[1], &pid)) != 0) {
+	if ((pid_parse_error = parse_pid(ctx->text_args[1], &pid)) != 0) {
 		switch (pid_parse_error) {
 			case 1:
 				fprintf(stderr, "The PID is negative.\n");
@@ -103,9 +103,9 @@ runtime_command_attach (struct command_args *cmd_args)
 		if (attach(pid) == 0) {
 			printf("Attach was successful.\n");
 
-			*(cmd_args->state) = RUNNING;
-			*(cmd_args->pid) = pid;
-			*(cmd_args->exec_path) = search_exec_path_for_pid(pid);
+			ctx->state = STATE_RUNNING;
+			ctx->pid = pid;
+			ctx->exec_path = search_exec_path_for_pid(pid);
 		} else {
 			printf("Attach was unsuccessful.\n");
 		}

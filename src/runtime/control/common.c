@@ -12,12 +12,25 @@
 #include <stdio.h>
 
 #include "runtime/control/control.h"
+#include "runtime/breakpoint/breakpoint.h"
+
+static void
+match_breakpoint(void* _bp, void* _ip)
+{
+	struct breakpoint* bp;
+	uint32_t* ip;
+
+	bp = _bp;
+	ip = _ip;
+
+	if (*ip - 1 == bp->addr)
+		printf("Stopped at breakpoint in file %s at line %d. ", bp->path, bp->line);
+}
 
 int 
-after_wait(int wait_status, pid_t* pid, struct breakpoint** bp)
+after_wait(int wait_status, struct context* ctx)
 {
 	struct reg regs;
-	struct breakpoint* node;
 
 	/* process-change handling routine */
 	if (WIFEXITED(wait_status)) {
@@ -27,26 +40,10 @@ after_wait(int wait_status, pid_t* pid, struct breakpoint** bp)
 		if (WSTOPSIG(wait_status) != SIGTRAP)
 			printf("Program received %s.\n", sys_siglist[WSTOPSIG(wait_status)]);
 			
-		ptrace(PT_GETREGS, *pid, (caddr_t)&regs, 0);
-
-		node = *bp;
-		while (node != NULL) {
-			if (regs.r_eip - 1 == node->addr) {
-				printf("Stopped at breakpoint in file %s at line %d. ", node->path, 
-				       node->line);
-				break;
-			}
-			node = node->next;
-		}
-
-		/* at end, but not at start either
-		 * means we have breakpoints, but have not stopped
-		 * on one of them */
-		if (node == NULL && *bp != NULL)
-			printf("Stopped at unknown place. ");
+		ptrace(PT_GETREGS, ctx->pid, (caddr_t)&regs, 0);
+		m_list_map(&ctx->breakpoints, match_breakpoint, (void*)&regs.r_eip);
 
 		printf("(IP = 0x%X)\n", regs.r_eip);
-		
 		return 1;
 	} else {
 		return -1;

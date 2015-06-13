@@ -1,13 +1,17 @@
 #ifndef KVETOSLAVOV_RUNTIME_CONTROL_CONTROL_H
 #define KVETOSLAVOV_RUNTIME_CONTROL_CONTROL_H
 
+#include <unistd.h>
+
+#include "runtime/context.h"
+
 /**
  * Attach to the selected process.
  * @param args contains the PID of the process 
  * @return 0
  */
 int 
-runtime_command_attach(struct command_args* cmd_args);
+runtime_command_attach(struct context* ctx);
 
 /**
  * Resume the debugee.
@@ -15,7 +19,7 @@ runtime_command_attach(struct command_args* cmd_args);
  * @return 0
  */
 int 
-runtime_command_continue(struct command_args* cmd_args);
+runtime_command_continue(struct context* ctx);
 
 /**
  * Detach the debuggee.
@@ -23,7 +27,7 @@ runtime_command_continue(struct command_args* cmd_args);
  * @return 0
  */
 int 
-runtime_command_detach(struct command_args* cmd_args);
+runtime_command_detach(struct context* ctx);
 
 /**
  * Start the selected executable.
@@ -31,7 +35,7 @@ runtime_command_detach(struct command_args* cmd_args);
  * @return 0
  */
 int 
-runtime_command_run(struct command_args* cmd_args);
+runtime_command_run(struct context* ctx);
 
 /**
  * Kill the debuggee.
@@ -39,7 +43,7 @@ runtime_command_run(struct command_args* cmd_args);
  * @return 0
  */
 int 
-runtime_command_stop(struct command_args* cmd_args);
+runtime_command_stop(struct context* ctx);
 
 /**
  * Handle the situation after the debugger was woken up from wait().
@@ -48,7 +52,7 @@ runtime_command_stop(struct command_args* cmd_args);
  * @param bp breakpoints
  */
 int 
-after_wait(int wait_status, pid_t* pid, struct breakpoint** bp);
+after_wait(int wait_status, struct context* ctx);
 
 /**
  * Checks whether process exists.

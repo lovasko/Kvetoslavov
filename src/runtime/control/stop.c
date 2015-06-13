@@ -1,8 +1,10 @@
 #include <sys/types.h>
 #include <sys/ptrace.h>
 
+#include <stdio.h>
+
 #include "runtime/control/control.h"
-#include "state/state.h"
+#include "runtime/state.h"
 
 static int 
 stop(pid_t pid)
@@ -14,21 +16,23 @@ stop(pid_t pid)
 }
 
 int 
-runtime_command_stop(struct command_args* cmd_args)
+runtime_command_stop(struct context* ctx)
 {
-	if (runtime_process_exists(*(cmd_args->pid)) == 0) {
-		if (stop(*(cmd_args->pid)) == 0) {
-			*(cmd_args->state) = DEFAULT;
-			*(cmd_args->pid) = -1;
-			*(cmd_args->exec_path) = NULL;	
-			/* TODO nullate breakpoint lists */
+	if (runtime_process_exists(ctx->pid) == 0) {
+		if (stop(ctx->pid) == 0) {
+			ctx->state = STATE_DEFAULT;
+			ctx->pid = -1;
+			ctx->exec_path = NULL;
+			m_list_clear(&ctx->breakpoints);
+			m_list_clear(&ctx->breakpoints_add);
+			m_list_clear(&ctx->breakpoints_remove);
 
 			fprintf(stdout, "Debuggee terminated.\n");
 		} else {
 			fprintf(stderr, "Unable to terminate the debuggee.\n");
 		}
 	} else {
-		fprintf(stderr, "Process does not exitst.\n");	
+		fprintf(stderr, "Process does not exist.\n");	
 	}
 
 	return 0;
