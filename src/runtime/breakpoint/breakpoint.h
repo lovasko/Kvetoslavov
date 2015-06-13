@@ -1,8 +1,6 @@
 #ifndef KVETOSLAVOV_RUNTIME_BREAKPOINT_BREAKPOINT_H
 #define KVETOSLAVOV_RUNTIME_BREAKPOINT_BREAKPOINT_H
 
-#include <sys/queue.h>
-
 struct breakpoint
 {
 	int line; /* number of the breakpoint's line */
@@ -11,8 +9,6 @@ struct breakpoint
 	long oxcc; /* original instruction, with first byte modified to 0xCC */
 	unsigned int addr; /* address of the address in executable corresponding to 
 	                     * line number */
-
-	struct breakpoint* next;  /* pointer to next node in linked list */
 };
 
 #endif
