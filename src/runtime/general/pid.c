@@ -3,9 +3,9 @@
 #include "runtime/general/general.h"
 
 int 
-runtime_command_pid(struct command_args* cmd_args)
+runtime_command_pid(struct context* ctx)
 {
-	printf("%d\n", *(cmd_args->pid));
+	printf("%d\n", ctx->pid);
 	return 0;
 }
 

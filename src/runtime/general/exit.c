@@ -1,9 +1,9 @@
 #include "runtime/general/general.h"
 
 int 
-runtime_command_exit(struct command_args* cmd_args)
+runtime_command_exit(struct context* ctx)
 {
-	(void) cmd_args;
+	(void)ctx;
 	return -1;
 }
 

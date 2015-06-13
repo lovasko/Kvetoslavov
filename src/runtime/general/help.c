@@ -3,9 +3,9 @@
 #include "runtime/general/general.h"
 
 int 
-runtime_command_help(struct command_args* cmd_args)
+runtime_command_help(struct context* ctx)
 {
-	(void) cmd_args;
+	(void)ctx;
 
 	printf("List of possible commands in each phase:\n"
 			"\tDEFAULT\n"
