@@ -1,5 +1,5 @@
 cflags = -ansi -pedantic -Wall -Wextra -Isrc/
-ldflags = -lkvm -lprocstat -ldwarf -lelf
+ldflags = -lkvm -lprocstat -ldwarf -lelf -lmlist
 
 rule compile
  command = clang $cflags -c $in -o $out
